@@ -25,7 +25,7 @@ type PlanPayload struct {
 	Type       string                 `json:"type,omitempty"`
 	Schedule   PlanSchedule           `json:"schedule,omitempty"`
 	Targets    []string               `json:"targets,omitempty"`
-	Parameters map[string]interface{} `json:"parameters,omitempty"`
+	Parameters map[string]any         `json:"parameters,omitempty"`
 	Raw        json.RawMessage        `json:"raw,omitempty"`
 }
 
@@ -39,8 +39,8 @@ type PlanDefinition struct {
 
 // CollectionItem represents a single piece of collected plan data
 type CollectionItem struct {
-	Name  string      `json:"name,omitempty"`
-	Value interface{} `json:"value,omitempty"`
+	Name  string `json:"name,omitempty"`
+	Value any    `json:"value,omitempty"`
 }
 
 // CollectionData represents normalized collected data for a plan
@@ -57,7 +57,7 @@ type CollectionStatus struct {
 	State       string                 `json:"state,omitempty"`
 	LastUpdated string                 `json:"lastUpdated,omitempty"`
 	Progress    float64                `json:"progress,omitempty"`
-	Details     map[string]interface{} `json:"details,omitempty"`
+	Details     map[string]any         `json:"details,omitempty"`
 }
 
 // MetadataAPI defines common metadata operations available in both freeze versions
