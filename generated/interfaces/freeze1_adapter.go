@@ -154,11 +154,14 @@ func (a *freeze1SessionAdapter) DestroySession(ctx context.Context, sessionID st
 	return nil
 }
 
-func (a *freeze1SessionAdapter) GetSession(ctx context.Context, sessionID string) (interface{}, error) {
+func (a *freeze1SessionAdapter) GetSession(ctx context.Context, sessionID string) (SessionInfo, error) {
 	if a.client == nil {
-		return nil, fmt.Errorf("session client not initialized")
+		return SessionInfo{}, fmt.Errorf("session client not initialized")
 	}
-	return map[string]string{"sessionID": sessionID}, nil
+	return SessionInfo{
+		SessionID: sessionID,
+		Status:    "unknown",
+	}, nil
 }
 
 func (a *freeze1SessionAdapter) GetActiveSessions(ctx context.Context) ([]string, error) {
@@ -180,7 +183,7 @@ type freeze1DataCollectionAdapter struct {
 	client dcm.DataCollectionManagement
 }
 
-func (a *freeze1DataCollectionAdapter) DefinePlan(ctx context.Context, planDef interface{}) error {
+func (a *freeze1DataCollectionAdapter) DefinePlan(ctx context.Context, planDef PlanDefinition) error {
 	return fmt.Errorf("DefinePlan not implemented in freeze1 data collection client")
 }
 
@@ -188,8 +191,8 @@ func (a *freeze1DataCollectionAdapter) GetDefinedPlanIds(ctx context.Context) ([
 	return nil, fmt.Errorf("GetDefinedPlanIds not implemented in freeze1 data collection client")
 }
 
-func (a *freeze1DataCollectionAdapter) GetPlanDefinition(ctx context.Context, planID string) (interface{}, error) {
-	return nil, fmt.Errorf("GetPlanDefinition not implemented in freeze1 data collection client")
+func (a *freeze1DataCollectionAdapter) GetPlanDefinition(ctx context.Context, planID string) (PlanDefinition, error) {
+	return PlanDefinition{}, fmt.Errorf("GetPlanDefinition not implemented in freeze1 data collection client")
 }
 
 func (a *freeze1DataCollectionAdapter) DeletePlan(ctx context.Context, planID string) error {
@@ -208,12 +211,12 @@ func (a *freeze1DataCollectionAdapter) DeactivatePlan(ctx context.Context, planI
 	return fmt.Errorf("DeactivatePlan not implemented in freeze1 data collection client")
 }
 
-func (a *freeze1DataCollectionAdapter) CollectData(ctx context.Context, planID string) (interface{}, error) {
-	return nil, fmt.Errorf("CollectData not implemented in freeze1 data collection client")
+func (a *freeze1DataCollectionAdapter) CollectData(ctx context.Context, planID string) (CollectionData, error) {
+	return CollectionData{}, fmt.Errorf("CollectData not implemented in freeze1 data collection client")
 }
 
-func (a *freeze1DataCollectionAdapter) GetCollectionStatus(ctx context.Context, planID string) (interface{}, error) {
-	return nil, fmt.Errorf("GetCollectionStatus not implemented in freeze1 data collection client")
+func (a *freeze1DataCollectionAdapter) GetCollectionStatus(ctx context.Context, planID string) (CollectionStatus, error) {
+	return CollectionStatus{}, fmt.Errorf("GetCollectionStatus not implemented in freeze1 data collection client")
 }
 
 // Freeze1 DiscoveryAPI Adapter (not applicable for freeze1)

@@ -58,7 +58,7 @@ type SecurityAPI interface {
 type SessionAPI interface {
     CreateSession(ctx context.Context) (sessionID string, err error)
     DestroySession(ctx context.Context, sessionID string) error
-    GetSession(ctx context.Context, sessionID string) (sessionInfo interface{}, err error)
+    GetSession(ctx context.Context, sessionID string) (sessionInfo SessionInfo, err error)
     GetActiveSessions(ctx context.Context) (sessions []string, err error)
     RefreshSession(ctx context.Context, sessionID string) error
 }
@@ -67,15 +67,15 @@ type SessionAPI interface {
 ### 4. **DataCollectionAPI** - Data Plans & Collection
 ```go
 type DataCollectionAPI interface {
-    DefinePlan(ctx context.Context, planDef interface{}) error
+    DefinePlan(ctx context.Context, planDef PlanDefinition) error
     GetDefinedPlanIds(ctx context.Context) (ids []string, err error)
-    GetPlanDefinition(ctx context.Context, planID string) (planDef interface{}, err error)
+    GetPlanDefinition(ctx context.Context, planID string) (planDef PlanDefinition, err error)
     DeletePlan(ctx context.Context, planID string) error
     ActivatePlan(ctx context.Context, planID string) error
     GetActivePlanIds(ctx context.Context) (ids []string, err error)
     DeactivatePlan(ctx context.Context, planID string) error
-    CollectData(ctx context.Context, planID string) (data interface{}, err error)
-    GetCollectionStatus(ctx context.Context, planID string) (status interface{}, err error)
+    CollectData(ctx context.Context, planID string) (data CollectionData, err error)
+    GetCollectionStatus(ctx context.Context, planID string) (status CollectionStatus, err error)
 }
 ```
 

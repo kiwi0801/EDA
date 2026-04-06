@@ -2,6 +2,36 @@ package interfaces
 
 import "context"
 
+// SessionInfo represents a normalized session object across freeze versions
+type SessionInfo struct {
+	SessionID string `json:"sessionID,omitempty"`
+	Status    string `json:"status,omitempty"`
+	CreatedAt string `json:"createdAt,omitempty"`
+	ExpiresAt string `json:"expiresAt,omitempty"`
+}
+
+// PlanDefinition represents a normalized plan payload across versions
+type PlanDefinition struct {
+	PlanID      string `json:"planID,omitempty"`
+	Name        string `json:"name,omitempty"`
+	Description string `json:"description,omitempty"`
+	Payload     string `json:"payload,omitempty"`
+}
+
+// CollectionData represents normalized collected data for a plan
+type CollectionData struct {
+	PlanID  string `json:"planID,omitempty"`
+	Summary string `json:"summary,omitempty"`
+	Payload string `json:"payload,omitempty"`
+}
+
+// CollectionStatus represents the current status of a collection plan
+type CollectionStatus struct {
+	PlanID      string `json:"planID,omitempty"`
+	State       string `json:"state,omitempty"`
+	LastUpdated string `json:"lastUpdated,omitempty"`
+}
+
 // MetadataAPI defines common metadata operations available in both freeze versions
 type MetadataAPI interface {
 	// Equipment Metadata operations
@@ -34,7 +64,7 @@ type SessionAPI interface {
 	// Session lifecycle
 	CreateSession(ctx context.Context) (sessionID string, err error)
 	DestroySession(ctx context.Context, sessionID string) error
-	GetSession(ctx context.Context, sessionID string) (sessionInfo interface{}, err error)
+	GetSession(ctx context.Context, sessionID string) (sessionInfo SessionInfo, err error)
 
 	// Session operations
 	GetActiveSessions(ctx context.Context) (sessions []string, err error)
@@ -44,9 +74,9 @@ type SessionAPI interface {
 // DataCollectionAPI defines common data collection operations
 type DataCollectionAPI interface {
 	// Plan management
-	DefinePlan(ctx context.Context, planDef interface{}) error
+	DefinePlan(ctx context.Context, planDef PlanDefinition) error
 	GetDefinedPlanIds(ctx context.Context) (ids []string, err error)
-	GetPlanDefinition(ctx context.Context, planID string) (planDef interface{}, err error)
+	GetPlanDefinition(ctx context.Context, planID string) (planDef PlanDefinition, err error)
 	DeletePlan(ctx context.Context, planID string) error
 
 	// Plan activation
@@ -55,8 +85,8 @@ type DataCollectionAPI interface {
 	DeactivatePlan(ctx context.Context, planID string) error
 
 	// Data collection
-	CollectData(ctx context.Context, planID string) (data interface{}, err error)
-	GetCollectionStatus(ctx context.Context, planID string) (status interface{}, err error)
+	CollectData(ctx context.Context, planID string) (data CollectionData, err error)
+	GetCollectionStatus(ctx context.Context, planID string) (status CollectionStatus, err error)
 }
 
 // DiscoveryAPI defines service discovery operations (primarily freeze2)
