@@ -1,6 +1,9 @@
 package interfaces
 
-import "context"
+import (
+	"context"
+	"encoding/json"
+)
 
 // SessionInfo represents a normalized session object across freeze versions
 type SessionInfo struct {
@@ -10,26 +13,51 @@ type SessionInfo struct {
 	ExpiresAt string `json:"expiresAt,omitempty"`
 }
 
+// PlanSchedule describes a plan execution schedule
+type PlanSchedule struct {
+	StartAt   string `json:"startAt,omitempty"`
+	EndAt     string `json:"endAt,omitempty"`
+	Frequency string `json:"frequency,omitempty"`
+}
+
+// PlanPayload represents the core structured payload for a plan
+type PlanPayload struct {
+	Type       string                 `json:"type,omitempty"`
+	Schedule   PlanSchedule           `json:"schedule,omitempty"`
+	Targets    []string               `json:"targets,omitempty"`
+	Parameters map[string]interface{} `json:"parameters,omitempty"`
+	Raw        json.RawMessage        `json:"raw,omitempty"`
+}
+
 // PlanDefinition represents a normalized plan payload across versions
 type PlanDefinition struct {
-	PlanID      string `json:"planID,omitempty"`
-	Name        string `json:"name,omitempty"`
-	Description string `json:"description,omitempty"`
-	Payload     string `json:"payload,omitempty"`
+	PlanID      string      `json:"planID,omitempty"`
+	Name        string      `json:"name,omitempty"`
+	Description string      `json:"description,omitempty"`
+	Payload     PlanPayload `json:"payload,omitempty"`
+}
+
+// CollectionItem represents a single piece of collected plan data
+type CollectionItem struct {
+	Name  string      `json:"name,omitempty"`
+	Value interface{} `json:"value,omitempty"`
 }
 
 // CollectionData represents normalized collected data for a plan
 type CollectionData struct {
-	PlanID  string `json:"planID,omitempty"`
-	Summary string `json:"summary,omitempty"`
-	Payload string `json:"payload,omitempty"`
+	PlanID  string           `json:"planID,omitempty"`
+	Summary string           `json:"summary,omitempty"`
+	Items   []CollectionItem `json:"items,omitempty"`
+	Raw     json.RawMessage  `json:"raw,omitempty"`
 }
 
 // CollectionStatus represents the current status of a collection plan
 type CollectionStatus struct {
-	PlanID      string `json:"planID,omitempty"`
-	State       string `json:"state,omitempty"`
-	LastUpdated string `json:"lastUpdated,omitempty"`
+	PlanID      string                 `json:"planID,omitempty"`
+	State       string                 `json:"state,omitempty"`
+	LastUpdated string                 `json:"lastUpdated,omitempty"`
+	Progress    float64                `json:"progress,omitempty"`
+	Details     map[string]interface{} `json:"details,omitempty"`
 }
 
 // MetadataAPI defines common metadata operations available in both freeze versions
