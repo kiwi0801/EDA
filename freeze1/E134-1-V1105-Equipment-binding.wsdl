@@ -1,0 +1,252 @@
+<?xml version="1.0" encoding="utf-8"?>
+<wsdl:definitions name="EquipmentDataCollectionManagement" 
+	xmlns="urn:semi-org:ws.E134-1.V1105.DCMEqp-binding" 
+	xmlns:xsd="http://www.w3.org/2001/XMLSchema" 
+	xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" 
+	xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/"
+	xmlns:dcmw="urn:semi-org:ws.E134-1.V1105.DCMEqp-binding"
+	xmlns:dcms="urn:semi-org:xsd.E134-1.V1105.DCM"
+	xmlns:dcmp="urn:semi-org:ws.E134-1.V1105.DCMEqp-portType"
+	targetNamespace="urn:semi-org:ws.E134-1.V1105.DCMEqp-binding">
+	
+<!--
+
+NOTICE: SEMI makes no warranties or representations as to the suitability of the standards set forth herein for any particular application. The determination of the suitability of the standard is solely the responsibility of the user. Users are cautioned to refer to manufacturer's instructions, product labels, product data sheets, and other relevant literature, respecting any materials or equipment mentioned herein. These standards are subject to change without notice.
+
+By publication of this standard, Semiconductor Equipment and Materials International (SEMI) takes no position respecting the validity of any patent rights or copyrights asserted in connection with any items mentioned in this standard. Users of this standard are expressly advised that determination of any such patent rights or copyrights, and the risk of infringement of such rights are entirely their own responsibility.
+
+-->
+
+	<!-- I M P O R T S -->
+	<wsdl:import namespace="urn:semi-org:ws.E134-1.V1105.DCMEqp-portType" 
+				location="E134-1-V1105-Equipment-portType.wsdl" />
+
+
+	<wsdl:message name="DefinePlanIn">
+		<wsdl:part name="DefinePlan" element="dcm:DefinePlanRequest" />
+	</wsdl:message>
+	<wsdl:message name="DefinePlanOut">
+		<wsdl:part name="DefinePlanResponse" element="dcm:DefinePlanResponse" />
+	</wsdl:message>
+	<wsdl:message name="GetDefinedPlanIdsIn">
+		<wsdl:part name="GetDefinedPlanIds" element="dcm:GetDefinedPlanIdsRequest" />
+	</wsdl:message>
+	<wsdl:message name="GetDefinedPlanIdsOut">
+		<wsdl:part name="GetDefinedPlanIdsResponse" element="dcm:GetDefinedPlanIdsResponse" />
+	</wsdl:message>
+	<wsdl:message name="GetPlanDefinitionIn">
+		<wsdl:part name="GetPlanDefinition" element="dcm:GetPlanDefinitionRequest" />
+	</wsdl:message>
+	<wsdl:message name="GetPlanDefinitionOut">
+		<wsdl:part name="GetPlanDefinitionResponse" element="dcm:GetPlanDefinitionResponse" />
+	</wsdl:message>
+	<wsdl:message name="ActivatePlanIn">
+		<wsdl:part name="ActivatePlan" element="dcm:ActivatePlanRequest" />
+	</wsdl:message>
+	<wsdl:message name="ActivatePlanOut">
+		<wsdl:part name="ActivatePlanResponse" element="dcm:ActivatePlanResponse" />
+	</wsdl:message>
+	<wsdl:message name="GetActivePlanIdsIn">
+		<wsdl:part name="GetActivePlanIds" element="dcm:GetActivePlanIdsRequest" />
+	</wsdl:message>
+	<wsdl:message name="GetActivePlanIdsOut">
+		<wsdl:part name="GetActivePlanIdsResponse" element="dcm:GetActivePlanIdsResponse" />
+	</wsdl:message>
+	<wsdl:message name="DeactivatePlanIn">
+		<wsdl:part name="DeactivatePlan" element="dcm:DeactivatePlanRequest" />
+	</wsdl:message>
+	<wsdl:message name="DeactivatePlanOut">
+		<wsdl:part name="DeactivatePlanResponse" element="dcm:DeactivatePlanResponse" />
+	</wsdl:message>
+	<wsdl:message name="DeletePlanIn">
+		<wsdl:part name="DeletePlan" element="dcm:DeletePlanRequest" />
+	</wsdl:message>
+	<wsdl:message name="DeletePlanOut">
+		<wsdl:part name="DeletePlanResponse" element="dcm:DeletePlanResponse" />
+	</wsdl:message>
+	<wsdl:message name="GetParameterValuesIn">
+		<wsdl:part name="GetParameterValues" element="dcm:GetParameterValuesRequest" />
+	</wsdl:message>
+	<wsdl:message name="GetParameterValuesOut">
+		<wsdl:part name="GetParameterValuesResponse" element="dcm:GetParameterValuesResponse" />
+	</wsdl:message>
+	<wsdl:message name="GetObjTypeInstanceIdsIn">
+		<wsdl:part name="GetObjTypeInstanceIds" element="dcm:GetObjTypeInstanceIdsRequest" />
+	</wsdl:message>
+	<wsdl:message name="GetObjTypeInstanceIdsOut">
+		<wsdl:part name="GetObjTypeInstanceIdsResponse" element="dcm:GetObjTypeInstanceIdsResponse" />
+	</wsdl:message>
+	<wsdl:message name="GetCurrentPerformanceStatusIn">
+		<wsdl:part name="GetCurrentPerformanceStatus" element="dcm:GetCurrentPerformanceStatusRequest" />
+	</wsdl:message>
+	<wsdl:message name="GetCurrentPerformanceStatusOut">
+		<wsdl:part name="GetCurrentPerformanceStatusResponse" element="dcm:GetCurrentPerformanceStatusResponse" />
+	</wsdl:message>
+	<wsdl:message name="E132HeaderMessage">
+		<wsdl:part name="E132Header" element="auth:E132Header"/>
+	</wsdl:message>
+
+    <!-- P O R T   T Y P E   D E F I N I T I O N S -->
+	<wsdl:portType name="DataCollectionManagement">
+		<wsdl:operation name="DefinePlan">
+			<wsdl:input name="DefinePlanInput" message="DefinePlanIn" />
+			<wsdl:output name="DefinePlanOutput" message="DefinePlanOut" />
+		</wsdl:operation>
+		<wsdl:operation name="GetDefinedPlanIds">
+			<wsdl:input name="GetDefinedPlanIdsInput" message="GetDefinedPlanIdsIn" />
+			<wsdl:output name="GetDefinedPlanIdsOutput" message="GetDefinedPlanIdsOut" />
+		</wsdl:operation>
+		<wsdl:operation name="GetPlanDefinition">
+			<wsdl:input name="GetPlanDefinitionInput" message="GetPlanDefinitionIn" />
+			<wsdl:output name="GetPlanDefinitionOutput" message="GetPlanDefinitionOut" />
+		</wsdl:operation>
+		<wsdl:operation name="ActivatePlan">
+			<wsdl:input name="ActivatePlanInput" message="ActivatePlanIn" />
+			<wsdl:output name="ActivatePlanOutput" message="ActivatePlanOut" />
+		</wsdl:operation>
+		<wsdl:operation name="GetActivePlanIds">
+			<wsdl:input name="GetActivePlanIdsInput" message="GetActivePlanIdsIn" />
+			<wsdl:output name="GetActivePlanIdsOutput" message="GetActivePlanIdsOut" />
+		</wsdl:operation>
+		<wsdl:operation name="DeactivatePlan">
+			<wsdl:input name="DeactivatePlanInput" message="DeactivatePlanIn" />
+			<wsdl:output name="DeactivatePlanOutput" message="DeactivatePlanOut" />
+		</wsdl:operation>
+		<wsdl:operation name="DeletePlan">
+			<wsdl:input name="DeletePlanInput" message="DeletePlanIn" />
+			<wsdl:output name="DeletePlanOutput" message="DeletePlanOut" />
+		</wsdl:operation>
+		<wsdl:operation name="GetParameterValues">
+			<wsdl:input name="GetParameterValuesInput" message="GetParameterValuesIn" />
+			<wsdl:output name="GetParameterValuesOutput" message="GetParameterValuesOut" />
+		</wsdl:operation>
+		<wsdl:operation name="GetObjTypeInstanceIds">
+			<wsdl:input name="GetObjTypeInstanceIdsInput" message="GetObjTypeInstanceIdsIn" />
+			<wsdl:output name="GetObjTypeInstanceIdsOutput" message="GetObjTypeInstanceIdsOut" />
+		</wsdl:operation>
+		<wsdl:operation name="GetCurrentPerformanceStatus">
+			<wsdl:input name="GetCurrentPerformanceStatusInput" message="GetCurrentPerformanceStatusIn" />
+			<wsdl:output name="GetCurrentPerformanceStatusOutput" message="GetCurrentPerformanceStatusOut" />
+		</wsdl:operation>
+	</wsdl:portType>
+
+	<!-- B I N D I N G   D E F I N I T I O N S -->
+	<wsdl:binding name="DataCollectionManagementBinding" type="dcmp:DataCollectionManagement">
+		<soap:binding style="document" transport="http://schemas.xmlsoap.org/soap/http"/>
+		<wsdl:operation name="DefinePlan">
+			<soap:operation style="document" soapAction="urn:semi-org:ws.E134-1.V1105.DCMEqp-binding:DefinePlan"/>
+			<wsdl:input name="DefinePlanInput">
+				<soap:header message="dcmp:E132HeaderMessage" part="E132Header" use="literal" required="true"/>
+				<soap:body use="literal"/>
+			</wsdl:input>
+			<wsdl:output name="DefinePlanOutput">
+				<soap:header message="dcmp:E132HeaderMessage" part="E132Header" use="literal" required="true"/>
+				<soap:body use="literal"/>
+			</wsdl:output>
+		</wsdl:operation>
+		<wsdl:operation name="GetDefinedPlanIds">
+			<soap:operation style="document" soapAction="urn:semi-org:ws.E134-1.V1105.DCMEqp-binding:GetDefinedPlanIds"/>
+			<wsdl:input name="GetDefinedPlanIdsInput">
+				<soap:header message="dcmp:E132HeaderMessage" part="E132Header" use="literal" required="true"/>
+				<soap:body use="literal"/>
+			</wsdl:input>
+			<wsdl:output name="GetDefinedPlanIdsOutput">
+				<soap:header message="dcmp:E132HeaderMessage" part="E132Header" use="literal" required="true"/>
+				<soap:body use="literal"/>
+			</wsdl:output>
+		</wsdl:operation>
+		<wsdl:operation name="GetPlanDefinition">
+			<soap:operation style="document" soapAction="urn:semi-org:ws.E134-1.V1105.DCMEqp-binding:GetPlanDefinition"/>
+			<wsdl:input name="GetPlanDefinitionInput">
+				<soap:header message="dcmp:E132HeaderMessage" part="E132Header" use="literal" required="true"/>
+				<soap:body use="literal"/>
+			</wsdl:input>
+			<wsdl:output name="GetPlanDefinitionOutput">
+				<soap:header message="dcmp:E132HeaderMessage" part="E132Header" use="literal" required="true"/>
+				<soap:body use="literal"/>
+			</wsdl:output>
+		</wsdl:operation>
+		<wsdl:operation name="ActivatePlan">
+			<soap:operation style="document" soapAction="urn:semi-org:ws.E134-1.V1105.DCMEqp-binding:ActivatePlan"/>
+			<wsdl:input name="ActivatePlanInput">
+				<soap:header message="dcmp:E132HeaderMessage" part="E132Header" use="literal" required="true"/>
+				<soap:body use="literal"/>
+			</wsdl:input>
+			<wsdl:output name="ActivatePlanOutput">
+				<soap:header message="dcmp:E132HeaderMessage" part="E132Header" use="literal" required="true"/>
+				<soap:body use="literal"/>
+			</wsdl:output>
+		</wsdl:operation>
+		<wsdl:operation name="GetActivePlanIds">
+			<soap:operation style="document" soapAction="urn:semi-org:ws.E134-1.V1105.DCMEqp-binding:GetActivePlanIds"/>
+			<wsdl:input name="GetActivePlanIdsInput">
+				<soap:header message="dcmp:E132HeaderMessage" part="E132Header" use="literal" required="true"/>
+				<soap:body use="literal"/>
+			</wsdl:input>
+			<wsdl:output name="GetActivePlanIdsOutput">
+				<soap:header message="dcmp:E132HeaderMessage" part="E132Header" use="literal" required="true"/>
+				<soap:body use="literal"/>
+			</wsdl:output>
+		</wsdl:operation>
+		<wsdl:operation name="DeactivatePlan">
+			<soap:operation style="document" soapAction="urn:semi-org:ws.E134-1.V1105.DCMEqp-binding:DeactivatePlan"/>
+			<wsdl:input name="DeactivatePlanInput">
+				<soap:header message="dcmp:E132HeaderMessage" part="E132Header" use="literal" required="true"/>
+				<soap:body use="literal"/>
+			</wsdl:input>
+			<wsdl:output name="DeactivatePlanOutput">
+				<soap:header message="dcmp:E132HeaderMessage" part="E132Header" use="literal" required="true"/>
+				<soap:body use="literal"/>
+			</wsdl:output>
+		</wsdl:operation>
+		<wsdl:operation name="DeletePlan">
+			<soap:operation style="document" soapAction="urn:semi-org:ws.E134-1.V1105.DCMEqp-binding:DeletePlan"/>
+			<wsdl:input name="DeletePlanInput">
+				<soap:header message="dcmp:E132HeaderMessage" part="E132Header" use="literal" required="true"/>
+				<soap:body use="literal"/>
+			</wsdl:input>
+			<wsdl:output name="DeletePlanOutput">
+				<soap:header message="dcmp:E132HeaderMessage" part="E132Header" use="literal" required="true"/>
+				<soap:body use="literal"/>
+			</wsdl:output>
+		</wsdl:operation>
+		<wsdl:operation name="GetParameterValues">
+			<soap:operation style="document" soapAction="urn:semi-org:ws.E134-1.V1105.DCMEqp-binding:GetParameterValues"/>
+			<wsdl:input name="GetParameterValuesInput">
+				<soap:header message="dcmp:E132HeaderMessage" part="E132Header" use="literal" required="true"/>
+				<soap:body use="literal"/>
+			</wsdl:input>
+			<wsdl:output name="GetParameterValuesOutput">
+				<soap:header message="dcmp:E132HeaderMessage" part="E132Header" use="literal" required="true"/>
+				<soap:body use="literal"/>
+			</wsdl:output>
+		</wsdl:operation>
+		<wsdl:operation name="GetObjTypeInstanceIds">
+			<soap:operation style="document" soapAction="urn:semi-org:ws.E134-1.V1105.DCMEqp-binding:GetObjTypeInstanceIds"/>
+			<wsdl:input name="GetObjTypeInstanceIdsInput">
+				<soap:header message="dcmp:E132HeaderMessage" part="E132Header" use="literal" required="true"/>
+				<soap:body use="literal"/>
+			</wsdl:input>
+			<wsdl:output name="GetObjTypeInstanceIdsOutput">
+				<soap:header message="dcmp:E132HeaderMessage" part="E132Header" use="literal" required="true"/>
+				<soap:body use="literal"/>
+			</wsdl:output>
+		</wsdl:operation>
+		<wsdl:operation name="GetCurrentPerformanceStatus">
+			<soap:operation style="document" soapAction="urn:semi-org:ws.E134-1.V1105.DCMEqp-binding:GetCurrentPerformanceStatus"/>
+			<wsdl:input name="GetCurrentPerformanceStatusInput">
+				<soap:header message="dcmp:E132HeaderMessage" part="E132Header" use="literal" required="true"/>
+				<soap:body use="literal"/>
+			</wsdl:input>
+			<wsdl:output name="GetCurrentPerformanceStatusOutput">
+				<soap:header message="dcmp:E132HeaderMessage" part="E132Header" use="literal" required="true"/>
+				<soap:body use="literal"/>
+			</wsdl:output>
+		</wsdl:operation>
+	</wsdl:binding>
+<wsdl:service name="E134EquipmentService">
+    <wsdl:port name="E134Port" binding="dcmw:DataCollectionManagementBinding">
+        <soap:address location="http://localhost:8000/E134"/>
+    </wsdl:port>
+</wsdl:service>
+</wsdl:definitions>

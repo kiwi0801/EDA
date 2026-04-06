@@ -1,0 +1,561 @@
+<?xml version="1.0" encoding="utf-8"?>
+<xsd:schema xmlns="urn:semi-org:xsd.E134-1.V1105.DCM" xmlns:eca="urn:semi-org:xsd.E132-1.V0305.auth" xmlns:ccs="urn:semi-org:xsd.CommonComponents.V0305.ccs" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:dcm="urn:semi-org:xsd.E134-1.V1105.DCM" targetNamespace="urn:semi-org:xsd.E134-1.V1105.DCM" elementFormDefault="qualified">
+	<!--
+
+NOTICE: SEMI makes no warranties or representations as to the suitability of the standards set forth herein for any particular application. The determination of the suitability of the standard is solely the responsibility of the user. Users are cautioned to refer to manufacturer's instructions, product labels, product data sheets, and other relevant literature, respecting any materials or equipment mentioned herein. These standards are subject to change without notice.
+
+By publication of this standard, Semiconductor Equipment and Materials International (SEMI) takes no position respecting the validity of any patent rights or copyrights asserted in connection with any items mentioned in this standard. Users of this standard are expressly advised that determination of any such patent rights or copyrights, and the risk of infringement of such rights are entirely their own responsibility.
+
+-->
+	<!-- I M P O R T S -->
+	<xsd:import namespace="urn:semi-org:xsd.CommonComponents.V0305.ccs" schemaLocation="CommonComponents-V0305-Schema.xsd"/>
+	<xsd:import namespace="urn:semi-org:xsd.E132-1.V0305.auth" schemaLocation="E132-1-V0305-Schema.xsd"/>
+	<!-- T Y P E   D E F I N I T I O N S -->
+	<xsd:complexType name="ParameterRequestType" final="#all">
+		<xsd:attribute name="sourceId" type="xsd:string" use="required"/>
+		<xsd:attribute name="parameterName" type="xsd:string" use="required"/>
+	</xsd:complexType>
+	<xsd:complexType name="EventRequestType" final="#all">
+		<xsd:sequence>
+			<xsd:element name="ParameterRequest" type="ParameterRequestType" nillable="false" minOccurs="0" maxOccurs="unbounded"/>
+		</xsd:sequence>
+		<xsd:attribute name="sourceId" type="xsd:string" use="required"/>
+		<xsd:attribute name="eventId" type="xsd:string" use="required"/>
+	</xsd:complexType>
+	<xsd:complexType name="ExceptionRequestType" final="#all">
+		<xsd:attribute name="sourceId" type="xsd:string" use="required"/>
+		<xsd:attribute name="exceptionId" type="xsd:string" use="required"/>
+		<xsd:attribute name="severity" type="xsd:string" use="required"/>
+	</xsd:complexType>
+	<xsd:complexType name="ExceptionTriggerType" final="#all">
+		<xsd:attribute name="sourceId" type="xsd:string" use="required"/>
+		<xsd:attribute name="exceptionId" type="xsd:string" use="required"/>
+		<xsd:attribute name="exceptionState" type="xsd:string" use="optional"/>
+	</xsd:complexType>
+	<xsd:complexType name="EventTriggerType" final="#all">
+		<xsd:attribute name="sourceId" type="xsd:string" use="required"/>
+		<xsd:attribute name="eventId" type="xsd:string" use="required"/>
+	</xsd:complexType>
+	<xsd:complexType name="TriggerSelectorType" final="#all">
+		<xsd:choice maxOccurs="unbounded">
+			<xsd:element name="EventTrigger" type="EventTriggerType" nillable="false"/>
+			<xsd:element name="ExceptionTrigger" type="ExceptionTriggerType" nillable="false"/>
+		</xsd:choice>
+	</xsd:complexType>
+	<xsd:complexType name="TraceRequestType" final="#all">
+		<xsd:sequence>
+			<xsd:element name="StartOn" type="TriggerSelectorType" nillable="false" minOccurs="0"/>
+			<xsd:element name="StopOn" type="TriggerSelectorType" nillable="false" minOccurs="0"/>
+			<xsd:element name="ParameterRequest" type="ParameterRequestType" nillable="false" minOccurs="0" maxOccurs="unbounded"/>
+		</xsd:sequence>
+		<xsd:attribute name="id" type="xsd:int" use="required"/>
+		<xsd:attribute name="intervalInSeconds" type="xsd:float" use="required"/>
+		<xsd:attribute name="collectionCount" type="xsd:int" use="required"/>
+		<xsd:attribute name="groupSize" type="xsd:int" use="required"/>
+		<xsd:attribute name="isCyclical" type="xsd:boolean" use="required"/>
+	</xsd:complexType>
+	<xsd:complexType name="DataCollectionPlanType" final="#all">
+		<xsd:sequence>
+			<xsd:element name="Description" type="xsd:string" block="#all" nillable="false"/>
+			<xsd:element name="EventRequest" type="EventRequestType" nillable="false" minOccurs="0" maxOccurs="unbounded"/>
+			<xsd:element name="ExceptionRequest" type="ExceptionRequestType" nillable="false" minOccurs="0" maxOccurs="unbounded"/>
+			<xsd:element name="TraceRequest" type="TraceRequestType" nillable="false" minOccurs="0" maxOccurs="unbounded"/>
+		</xsd:sequence>
+		<xsd:attribute name="name" type="xsd:string" use="required"/>
+		<xsd:attribute name="id" type="xsd:string" use="required"/>
+		<xsd:attribute name="intervalInMinutes" type="xsd:int" use="required"/>
+		<xsd:attribute name="isPersistent" type="xsd:boolean" use="required"/>
+	</xsd:complexType>
+	<xsd:complexType name="DCPDefinedType" final="#all">
+		<xsd:attribute name="planId" type="xsd:string" use="required"/>
+		<xsd:attribute name="timeDefined" type="xsd:dateTime" use="required"/>
+		<xsd:attribute name="definedBy" type="xsd:string" use="required"/>
+	</xsd:complexType>
+	<xsd:complexType name="InvalidEventRequestType" final="#all">
+		<xsd:sequence>
+			<xsd:element name="InvalidParameter" type="InvalidParameterRequestType" nillable="false" minOccurs="0" maxOccurs="unbounded"/>
+		</xsd:sequence>
+		<xsd:attribute name="sourceId" type="xsd:string" use="required"/>
+		<xsd:attribute name="eventId" type="xsd:string" use="required"/>
+		<xsd:attribute name="invalidSourceId" type="xsd:boolean" use="required"/>
+		<xsd:attribute name="invalidEventId" type="xsd:boolean" use="required"/>
+		<xsd:attribute name="notProducedBySource" type="xsd:boolean" use="required"/>
+		<xsd:attribute name="isDuplicate" type="xsd:boolean" use="required"/>
+	</xsd:complexType>
+	<xsd:complexType name="InvalidExceptionRequestType" final="#all">
+		<xsd:attribute name="sourceId" type="xsd:string" use="required"/>
+		<xsd:attribute name="exceptionId" type="xsd:string" use="required"/>
+		<xsd:attribute name="severity" type="xsd:string" use="required"/>
+		<xsd:attribute name="invalidSourceId" type="xsd:boolean" use="required"/>
+		<xsd:attribute name="invalidExceptionId" type="xsd:boolean" use="required"/>
+		<xsd:attribute name="invalidSeverity" type="xsd:boolean" use="required"/>
+		<xsd:attribute name="notProducedBySource" type="xsd:boolean" use="required"/>
+		<xsd:attribute name="isDuplicate" type="xsd:boolean" use="required"/>
+	</xsd:complexType>
+	<xsd:complexType name="InvalidParameterRequestType" final="#all">
+		<xsd:attribute name="sourceId" type="xsd:string" use="required"/>
+		<xsd:attribute name="parameterName" type="xsd:string" use="required"/>
+		<xsd:attribute name="invalidSourceId" type="xsd:boolean" use="required"/>
+		<xsd:attribute name="invalidParameterName" type="xsd:boolean" use="required"/>
+		<xsd:attribute name="notProducedBySource" type="xsd:boolean" use="required"/>
+		<xsd:attribute name="invalidContext" type="xsd:boolean" use="required"/>
+	</xsd:complexType>
+	<xsd:complexType name="InvalidTriggerType" final="#all">
+		<xsd:attribute name="sourceId" type="xsd:string" use="required"/>
+		<xsd:attribute name="itemId" type="xsd:string" use="required"/>
+		<xsd:attribute name="invalidStartTrigger" type="xsd:boolean" use="required"/>
+		<xsd:attribute name="invalidEventTrigger" type="xsd:boolean" use="required"/>
+		<xsd:attribute name="invalidExceptionState" type="xsd:boolean" use="required"/>
+		<xsd:attribute name="invalidSourceId" type="xsd:boolean" use="required"/>
+		<xsd:attribute name="invalidItemId" type="xsd:boolean" use="required"/>
+		<xsd:attribute name="notProducedBySource" type="xsd:boolean" use="required"/>
+		<xsd:attribute name="isDuplicate" type="xsd:boolean" use="required"/>
+	</xsd:complexType>
+	<xsd:complexType name="InvalidIntervalType" final="#all">
+		<xsd:attribute name="validInterval" type="xsd:float" use="required"/>
+	</xsd:complexType>
+	<xsd:complexType name="InvalidCycleType" final="#all">
+		<xsd:attribute name="needsStartTrigger" type="xsd:boolean" use="required"/>
+		<xsd:attribute name="needsStopTrigger" type="xsd:boolean" use="required"/>
+	</xsd:complexType>
+	<xsd:complexType name="InvalidTraceRequestType" final="#all">
+		<xsd:sequence>
+			<xsd:element name="InvalidParameter" type="InvalidParameterRequestType" nillable="false" minOccurs="0" maxOccurs="unbounded"/>
+			<xsd:element name="InvalidTrigger" type="InvalidTriggerType" nillable="false" minOccurs="0" maxOccurs="unbounded"/>
+			<xsd:element name="InvalidInterval" type="InvalidIntervalType" nillable="false" minOccurs="0"/>
+			<xsd:element name="InvalidCycle" type="InvalidCycleType" nillable="false" minOccurs="0"/>
+		</xsd:sequence>
+		<xsd:attribute name="traceId" type="xsd:int" use="required"/>
+		<xsd:attribute name="duplicateId" type="xsd:boolean" use="required"/>
+	</xsd:complexType>
+	<xsd:complexType name="InvalidPlanType" final="#all">
+		<xsd:sequence>
+			<xsd:element name="InvalidEvent" type="InvalidEventRequestType" nillable="false" minOccurs="0" maxOccurs="unbounded"/>
+			<xsd:element name="InvalidException" type="InvalidExceptionRequestType" nillable="false" minOccurs="0" maxOccurs="unbounded"/>
+			<xsd:element name="DuplicatePlanId" type="DCPDefinedType" nillable="false" minOccurs="0"/>
+			<xsd:element name="InvalidTraceRequest" type="InvalidTraceRequestType" nillable="false" minOccurs="0" maxOccurs="unbounded"/>
+		</xsd:sequence>
+		<xsd:attribute name="planId" type="xsd:string" use="required"/>
+		<xsd:attribute name="description" type="xsd:string" use="required"/>
+	</xsd:complexType>
+	<xsd:complexType name="DefinePlanErrorType" final="#all">
+		<xsd:sequence>
+			<xsd:element ref="ccs:Error"/>
+			<xsd:choice minOccurs="0">
+				<xsd:element name="UnauthorizedOperationError" type="eca:UnauthorizedOperationType" nillable="false"/>
+				<xsd:element name="InvalidPlanError" type="InvalidPlanType" nillable="false"/>
+			</xsd:choice>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:complexType name="GetDefinedPlanIdsErrorType" final="#all">
+		<xsd:sequence>
+			<xsd:element ref="ccs:Error"/>
+			<xsd:choice minOccurs="0">
+				<xsd:element name="UnauthorizedOperationError" type="eca:UnauthorizedOperationType" nillable="false"/>
+			</xsd:choice>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:complexType name="NoSuchPlanType" final="#all">
+		<xsd:attribute name="planId" type="xsd:string" use="required"/>
+	</xsd:complexType>
+	<xsd:complexType name="GetPlanDefinitionErrorType" final="#all">
+		<xsd:sequence>
+			<xsd:element ref="ccs:Error"/>
+			<xsd:choice minOccurs="0">
+				<xsd:element name="UnauthorizedOperationError" type="eca:UnauthorizedOperationType" nillable="false"/>
+				<xsd:element name="NoSuchPlanError" type="NoSuchPlanType" nillable="false"/>
+			</xsd:choice>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:complexType name="DCPActivatedType" final="#all">
+		<xsd:attribute name="planId" type="xsd:string" use="required"/>
+		<xsd:attribute name="timeActivated" type="xsd:dateTime" use="required"/>
+		<xsd:attribute name="activatedBy" type="xsd:string" use="required"/>
+	</xsd:complexType>
+	<xsd:complexType name="ActivatePlanErrorType" final="#all">
+		<xsd:sequence>
+			<xsd:element ref="ccs:Error"/>
+			<xsd:choice minOccurs="0">
+				<xsd:element name="UnauthorizedOperationError" type="eca:UnauthorizedOperationType" nillable="false"/>
+				<xsd:element name="NoSuchPlanError" type="NoSuchPlanType" nillable="false"/>
+				<xsd:element name="InvalidPlanError" type="InvalidPlanType" nillable="false"/>
+				<xsd:element name="DCPIsActiveError" type="DCPActivatedType" nillable="false"/>
+			</xsd:choice>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:complexType name="GetActivePlanIdsErrorType" final="#all">
+		<xsd:sequence>
+			<xsd:element ref="ccs:Error"/>
+			<xsd:choice minOccurs="0">
+				<xsd:element name="UnauthorizedOperationError" type="eca:UnauthorizedOperationType" nillable="false"/>
+			</xsd:choice>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:complexType name="DCPDeactivatedType" final="#all">
+		<xsd:sequence>
+			<xsd:element name="reason" type="xsd:string" nillable="false"/>
+		</xsd:sequence>
+		<xsd:attribute name="planId" type="xsd:string" use="required"/>
+		<xsd:attribute name="timeDeactivated" type="xsd:dateTime" use="required"/>
+		<xsd:attribute name="deactivatedBy" type="xsd:string" use="required"/>
+	</xsd:complexType>
+	<xsd:complexType name="DCPNotActiveType" final="#all">
+		<xsd:attribute name="planId" type="xsd:string" use="required"/>
+	</xsd:complexType>
+	<xsd:complexType name="DeactivatePlanErrorType" final="#all">
+		<xsd:sequence>
+			<xsd:element ref="ccs:Error"/>
+			<xsd:choice minOccurs="0">
+				<xsd:element name="UnauthorizedOperationError" type="eca:UnauthorizedOperationType" nillable="false"/>
+				<xsd:element name="NoSuchPlanError" type="NoSuchPlanType" nillable="false"/>
+				<xsd:element name="DCPNotActive" type="DCPNotActiveType" nillable="false"/>
+			</xsd:choice>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:complexType name="DCPDeletedType" final="#all">
+		<xsd:attribute name="planId" type="xsd:string" use="required"/>
+		<xsd:attribute name="timeDeleted" type="xsd:dateTime" use="required"/>
+		<xsd:attribute name="deletedBy" type="xsd:string" use="required"/>
+	</xsd:complexType>
+	<xsd:complexType name="DCPIsActiveType" final="#all">
+		<xsd:sequence>
+			<xsd:element name="ActivatedPlan" type="DCPActivatedType" nillable="false"/>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:complexType name="DeletePlanErrorType" final="#all">
+		<xsd:sequence>
+			<xsd:element ref="ccs:Error"/>
+			<xsd:choice minOccurs="0">
+				<xsd:element name="UnauthorizedOperationError" type="eca:UnauthorizedOperationType" nillable="false"/>
+				<xsd:element name="NoSuchPlanError" type="NoSuchPlanType" nillable="false"/>
+				<xsd:element name="DCPIsActiveError" type="DCPIsActiveType" nillable="false"/>
+			</xsd:choice>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:complexType name="GetParameterValuesErrorType" final="#all">
+		<xsd:sequence>
+			<xsd:element ref="ccs:Error"/>
+			<xsd:element name="UnauthorizedOperationError" type="eca:UnauthorizedOperationType" nillable="false" minOccurs="0"/>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:complexType name="ObjTypeRequestType" final="#all">
+		<xsd:attribute name="sourceId" type="xsd:string" use="required"/>
+		<xsd:attribute name="objTypeId" type="xsd:string" use="required"/>
+	</xsd:complexType>
+	<xsd:complexType name="ObjTypeInstanceType" final="#all">
+		<xsd:attribute name="instanceId" type="xsd:string" use="required"/>
+	</xsd:complexType>
+	<xsd:complexType name="ObjTypeRequestErrorType" final="#all">
+		<xsd:attribute name="invalidSource" type="xsd:boolean" use="required"/>
+		<xsd:attribute name="invalidObjType" type="xsd:boolean" use="required"/>
+		<xsd:attribute name="sourceDoesNotProduceObjType" type="xsd:boolean" use="required"/>
+	</xsd:complexType>
+	<xsd:complexType name="ObjTypeResultType" final="#all">
+		<xsd:choice>
+			<xsd:element name="ObjTypeInstance" type="ObjTypeInstanceType" nillable="false" minOccurs="0" maxOccurs="unbounded"/>
+			<xsd:element name="ObjTypeRequestError" type="ObjTypeRequestErrorType" nillable="false"/>
+		</xsd:choice>
+		<xsd:attribute name="sourceId" type="xsd:string" use="required"/>
+		<xsd:attribute name="objTypeId" type="xsd:string" use="required"/>
+	</xsd:complexType>
+	<xsd:simpleType name="JobTypeEnumType" final="#all">
+		<xsd:restriction base="xsd:string">
+			<xsd:enumeration value="urn:semi-org:E94:ControlJob"/>
+			<xsd:enumeration value="urn:semi-org:E40:ProcessJob"/>
+			<xsd:enumeration value="urn:semi-org:E30:ppSelect"/>
+			<xsd:enumeration value="urn:semi-org:E30:rcpSelect"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:complexType name="ActiveJobType" final="#all">
+		<xsd:attribute name="jobId" type="xsd:string" use="required"/>
+		<xsd:attribute name="jobType" type="JobTypeEnumType" use="required"/>
+	</xsd:complexType>
+	<xsd:complexType name="AffectedSystemType" final="#all">
+		<xsd:attribute name="equipmentComponent" type="xsd:string" use="required"/>
+		<xsd:attribute name="description" type="xsd:string" use="required"/>
+	</xsd:complexType>
+	<xsd:complexType name="PerformanceStatusType" final="#all">
+		<xsd:sequence>
+			<xsd:element name="ActivePlan" type="DCPActivatedType" nillable="false" minOccurs="0" maxOccurs="unbounded"/>
+			<xsd:element name="ActiveJob" type="ActiveJobType" nillable="false" minOccurs="0" maxOccurs="unbounded"/>
+			<xsd:element name="AffectedSystem" type="AffectedSystemType" nillable="false" minOccurs="0" maxOccurs="unbounded"/>
+			<xsd:element name="description" type="xsd:string" nillable="false" minOccurs="0"/>
+		</xsd:sequence>
+		<xsd:attribute name="timeLastEvaluated" type="xsd:dateTime" use="required"/>
+		<xsd:attribute name="isBelowThreshold" type="xsd:boolean" use="required"/>
+	</xsd:complexType>
+	<xsd:simpleType name="NoValueReasonEnumType" final="#all">
+		<xsd:restriction base="xsd:string">
+			<xsd:enumeration value="ValueNotAvailable"/>
+			<xsd:enumeration value="NoSuchSource"/>
+			<xsd:enumeration value="NoSuchParameter"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:complexType name="NoValueType">
+		<xsd:sequence>
+			<xsd:element name="description" type="xsd:string" nillable="false"/>
+		</xsd:sequence>
+		<xsd:attribute name="reasonCode" type="NoValueReasonEnumType" use="required"/>
+	</xsd:complexType>
+	<xsd:complexType name="NullType" final="#all">
+		<xsd:attribute name="isNull" type="xsd:boolean" use="required"/>
+	</xsd:complexType>
+	<xsd:complexType name="CompositeValueType">
+		<xsd:choice maxOccurs="unbounded">
+			<xsd:element name="F4" type="xsd:float" block="#all" nillable="false"/>
+			<xsd:element name="F8" type="xsd:double" block="#all" nillable="false"/>
+			<xsd:element name="I8" type="xsd:long" block="#all" nillable="false"/>
+			<xsd:element name="I4" type="xsd:int" block="#all" nillable="false"/>
+			<xsd:element name="I2" type="xsd:short" block="#all" nillable="false"/>
+			<xsd:element name="I1" type="xsd:byte" block="#all" nillable="false"/>
+			<xsd:element name="S" type="xsd:string" block="#all" nillable="false"/>
+			<xsd:element name="D" type="xsd:dateTime" block="#all" nillable="false"/>
+			<xsd:element name="B" type="xsd:boolean" block="#all" nillable="false"/>
+			<xsd:element name="URI" type="xsd:anyURI" block="#all" nillable="false"/>
+			<xsd:element name="EI" type="xsd:int" block="#all" nillable="false"/>
+			<xsd:element name="ES" type="xsd:string" block="#all" nillable="false"/>
+			<xsd:element name="B64" type="xsd:base64Binary" block="#all" nillable="false"/>
+			<xsd:element name="Su" type="CompositeValueType" nillable="false"/>
+			<xsd:element name="Arr" type="CompositeValueType" nillable="false"/>
+			<xsd:element name="Var" type="CompositeValueType" nillable="false"/>
+			<xsd:element name="Null" type="NullType" nillable="false"/>
+		</xsd:choice>
+		<xsd:attribute name="isNull" type="xsd:boolean" use="optional" default="false"/>
+	</xsd:complexType>
+	<xsd:complexType name="ParameterValueType">
+		<xsd:choice>
+			<xsd:element name="F4" type="xsd:float" block="#all" nillable="false"/>
+			<xsd:element name="F8" type="xsd:double" block="#all" nillable="false"/>
+			<xsd:element name="I8" type="xsd:long" block="#all" nillable="false"/>
+			<xsd:element name="I4" type="xsd:int" block="#all" nillable="false"/>
+			<xsd:element name="I2" type="xsd:short" block="#all" nillable="false"/>
+			<xsd:element name="I1" type="xsd:byte" block="#all" nillable="false"/>
+			<xsd:element name="S" type="xsd:string" block="#all" nillable="false"/>
+			<xsd:element name="D" type="xsd:dateTime" block="#all" nillable="false"/>
+			<xsd:element name="B" type="xsd:boolean" block="#all" nillable="false"/>
+			<xsd:element name="URI" type="xsd:anyURI" block="#all" nillable="false"/>
+			<xsd:element name="EI" type="xsd:int" block="#all" nillable="false"/>
+			<xsd:element name="ES" type="xsd:string" block="#all" nillable="false"/>
+			<xsd:element name="B64" type="xsd:base64Binary" block="#all" nillable="false"/>
+			<xsd:element name="Su" type="CompositeValueType" nillable="false"/>
+			<xsd:element name="Arr" type="CompositeValueType" nillable="false"/>
+			<xsd:element name="Var" type="CompositeValueType" nillable="false"/>
+			<xsd:element name="Null" type="NullType" nillable="false"/>
+			<xsd:element name="NoValue" type="NoValueType" nillable="false"/>
+		</xsd:choice>
+	</xsd:complexType>
+	<xsd:complexType name="CollectedDataType">
+		<xsd:sequence>
+			<xsd:element name="PV" type="ParameterValueType" nillable="false" maxOccurs="unbounded"/>
+		</xsd:sequence>
+		<xsd:attribute name="collectionTime" type="xsd:dateTime" use="required"/>
+	</xsd:complexType>
+	<xsd:complexType name="EventReportType">
+		<xsd:sequence>
+			<xsd:element name="PV" type="ParameterValueType" nillable="false" minOccurs="0" maxOccurs="unbounded"/>
+		</xsd:sequence>
+		<xsd:attribute name="sourceId" type="xsd:string" use="optional"/>
+		<xsd:attribute name="eventId" type="xsd:string" use="optional"/>
+		<xsd:attribute name="eventTime" type="xsd:dateTime" use="required"/>
+	</xsd:complexType>
+	<xsd:complexType name="ExceptionReportType">
+		<xsd:sequence>
+			<xsd:element name="PV" type="ParameterValueType" nillable="false" minOccurs="0" maxOccurs="unbounded"/>
+		</xsd:sequence>
+		<xsd:attribute name="sourceId" type="xsd:string" use="required"/>
+		<xsd:attribute name="exceptionId" type="xsd:string" use="required"/>
+		<xsd:attribute name="exceptionTime" type="xsd:dateTime" use="required"/>
+		<xsd:attribute name="severity" type="xsd:string" use="required"/>
+		<xsd:attribute name="state" type="xsd:string" use="required"/>
+	</xsd:complexType>
+	<xsd:complexType name="TraceReportType">
+		<xsd:sequence>
+			<xsd:element name="StartTrigger" type="TriggerSelectorType" nillable="false" minOccurs="0"/>
+			<xsd:element name="StopTrigger" type="TriggerSelectorType" nillable="false" minOccurs="0"/>
+			<xsd:element name="TR" type="CollectedDataType" nillable="false" maxOccurs="unbounded"/>
+		</xsd:sequence>
+		<xsd:attribute name="traceId" type="xsd:int" use="required"/>
+		<xsd:attribute name="reportTime" type="xsd:dateTime" use="required"/>
+		<xsd:attribute name="startTriggerTime" type="xsd:dateTime" use="optional"/>
+		<xsd:attribute name="stopTriggerTime" type="xsd:dateTime" use="optional"/>
+	</xsd:complexType>
+	<xsd:complexType name="DataCollectionReportType">
+		<xsd:choice maxOccurs="unbounded">
+			<xsd:element name="TraceReport" type="TraceReportType" nillable="false"/>
+			<xsd:element name="EventReport" type="EventReportType" nillable="false"/>
+			<xsd:element name="ExceptionReport" type="ExceptionReportType" nillable="false"/>
+		</xsd:choice>
+		<xsd:attribute name="planID" type="xsd:string" use="required"/>
+		<xsd:attribute name="bufferStartTime" type="xsd:dateTime" use="optional"/>
+		<xsd:attribute name="bufferEndTime" type="xsd:dateTime" use="optional"/>
+		<xsd:attribute name="reportTime" type="xsd:dateTime" use="required"/>
+	</xsd:complexType>
+	<xsd:complexType name="DCPHibernatedType" final="#all">
+		<xsd:attribute name="planId" type="xsd:string" use="required"/>
+		<xsd:attribute name="timeHibernated" type="xsd:dateTime" use="required"/>
+	</xsd:complexType>
+	<!-- M E S S A G E    C O N T A I N E R    D E F I N I T I O N S -->
+	<xsd:complexType name="DefinePlanRequestType" final="#all">
+		<xsd:sequence>
+			<xsd:element name="NewPlan" type="DataCollectionPlanType" nillable="false"/>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:complexType name="DefinePlanResponseType" final="#all">
+		<xsd:choice>
+			<xsd:element name="PlanDefined" type="DCPDefinedType" nillable="false"/>
+			<xsd:element name="Error" type="DefinePlanErrorType" nillable="false"/>
+		</xsd:choice>
+	</xsd:complexType>
+	<xsd:complexType name="GetDefinedPlanIdsRequestType" final="#all">
+		<xsd:sequence/>
+	</xsd:complexType>
+	<xsd:complexType name="GetDefinedPlanIdsResponseType" final="#all">
+		<xsd:choice>
+			<xsd:element name="DefinedPlan" type="DCPDefinedType" nillable="false" minOccurs="0" maxOccurs="unbounded"/>
+			<xsd:element name="Error" type="GetDefinedPlanIdsErrorType" nillable="false"/>
+		</xsd:choice>
+	</xsd:complexType>
+	<xsd:complexType name="GetPlanDefinitionRequestType" final="#all">
+		<xsd:sequence>
+			<xsd:element name="PlanId" type="xsd:string" nillable="false"/>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:complexType name="GetPlanDefinitionResponseType" final="#all">
+		<xsd:choice>
+			<xsd:element name="PlanDefinition" type="DataCollectionPlanType" nillable="false"/>
+			<xsd:element name="Error" type="GetPlanDefinitionErrorType" nillable="false"/>
+		</xsd:choice>
+	</xsd:complexType>
+	<xsd:complexType name="ActivatePlanRequestType" final="#all">
+		<xsd:sequence>
+			<xsd:element name="PlanId" type="xsd:string" nillable="false"/>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:complexType name="ActivatePlanResponseType" final="#all">
+		<xsd:choice>
+			<xsd:element name="ActivatedPlan" type="DCPActivatedType" nillable="false"/>
+			<xsd:element name="Error" type="ActivatePlanErrorType" nillable="false"/>
+		</xsd:choice>
+	</xsd:complexType>
+	<xsd:complexType name="GetActivePlanIdsRequestType" final="#all">
+		<xsd:sequence/>
+	</xsd:complexType>
+	<xsd:complexType name="GetActivePlanIdsResponseType" final="#all">
+		<xsd:choice>
+			<xsd:element name="ActivatedPlan" type="DCPActivatedType" nillable="false" minOccurs="0" maxOccurs="unbounded"/>
+			<xsd:element name="Error" type="GetActivePlanIdsErrorType" nillable="false"/>
+		</xsd:choice>
+	</xsd:complexType>
+	<xsd:complexType name="DeactivatePlanRequestType" final="#all">
+		<xsd:attribute name="planId" type="xsd:string" use="required"/>
+		<xsd:attribute name="terminate" type="xsd:boolean" use="required"/>
+	</xsd:complexType>
+	<xsd:complexType name="DeactivatePlanResponseType" final="#all">
+		<xsd:choice>
+			<xsd:element name="DeactivatedPlan" type="DCPDeactivatedType" nillable="false"/>
+			<xsd:element name="Error" type="DeactivatePlanErrorType" nillable="false"/>
+		</xsd:choice>
+	</xsd:complexType>
+	<xsd:complexType name="DeletePlanRequestType" final="#all">
+		<xsd:attribute name="planId" type="xsd:string" use="required"/>
+	</xsd:complexType>
+	<xsd:complexType name="DeletePlanResponseType" final="#all">
+		<xsd:choice>
+			<xsd:element name="DeletedPlan" type="DCPDeletedType" nillable="false"/>
+			<xsd:element name="Error" type="DeletePlanErrorType" nillable="false"/>
+		</xsd:choice>
+	</xsd:complexType>
+	<xsd:complexType name="GetParameterValuesRequestType" final="#all">
+		<xsd:sequence>
+			<xsd:element name="ParameterRequest" type="ParameterRequestType" nillable="false" maxOccurs="unbounded"/>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:complexType name="GetParameterValuesResponseType" final="#all">
+		<xsd:choice>
+			<xsd:element name="PV" type="ParameterValueType" nillable="false" maxOccurs="unbounded"/>
+			<xsd:element name="Error" type="GetParameterValuesErrorType" nillable="false"/>
+		</xsd:choice>
+	</xsd:complexType>
+	<xsd:complexType name="GetObjTypeInstanceIdsRequestType" final="#all">
+		<xsd:sequence>
+			<xsd:element name="Request" type="ObjTypeRequestType" nillable="false" minOccurs="0" maxOccurs="unbounded"/>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:complexType name="GetObjTypeInstanceIdsErrorType" final="#all">
+		<xsd:sequence>
+			<xsd:element ref="ccs:Error"/>
+			<xsd:element name="UnauthorizedOperationError" type="eca:UnauthorizedOperationType" nillable="false" minOccurs="0"/>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:complexType name="GetObjTypeInstanceIdsResponseType" final="#all">
+		<xsd:choice>
+			<xsd:element name="ObjTypeInstance" type="ObjTypeResultType" nillable="false" minOccurs="0" maxOccurs="unbounded"/>
+			<xsd:element name="Error" type="GetObjTypeInstanceIdsErrorType" nillable="false"/>
+		</xsd:choice>
+	</xsd:complexType>
+	<xsd:complexType name="GetCurrentPerformanceStatusRequestType" final="#all">
+		<xsd:sequence/>
+	</xsd:complexType>
+	<xsd:complexType name="GetCurrentPerformanceStatusErrorType" final="#all">
+		<xsd:sequence>
+			<xsd:element ref="ccs:Error"/>
+			<xsd:element name="UnauthorizedOperationError" type="eca:UnauthorizedOperationType" nillable="false" minOccurs="0"/>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:complexType name="GetCurrentPerformanceStatusResponseType" final="#all">
+		<xsd:choice>
+			<xsd:element name="Status" type="PerformanceStatusType" nillable="false"/>
+			<xsd:element name="Error" type="GetCurrentPerformanceStatusErrorType" nillable="false"/>
+		</xsd:choice>
+	</xsd:complexType>
+	<xsd:complexType name="NewDataNotificationType" final="#all">
+		<xsd:sequence>
+			<xsd:element name="DCR" type="DataCollectionReportType" nillable="false"/>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:complexType name="PerformanceWarningNotificationType" final="#all">
+		<xsd:sequence>
+			<xsd:element name="Warning" type="PerformanceStatusType" nillable="false"/>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:complexType name="PerformanceRestoredNotificationType" final="#all">
+		<xsd:sequence>
+			<xsd:element name="Status" type="PerformanceStatusType" nillable="false"/>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:complexType name="DCPDeactivationNotificationType" final="#all">
+		<xsd:sequence>
+			<xsd:element name="DeactivationNotice" type="DCPDeactivatedType" nillable="false" minOccurs="0" maxOccurs="unbounded"/>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:complexType name="DCPHibernatedNotificationType" final="#all">
+		<xsd:sequence>
+			<xsd:element name="HibernatingPlan" type="DCPHibernatedType" nillable="false" maxOccurs="unbounded"/>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:element name="DefinePlanRequest" type="DefinePlanRequestType" nillable="false"/>
+	<xsd:element name="DefinePlanResponse" type="DefinePlanResponseType" nillable="false"/>
+	<xsd:element name="GetDefinedPlanIdsRequest" type="GetDefinedPlanIdsRequestType" nillable="false"/>
+	<xsd:element name="GetDefinedPlanIdsResponse" type="GetDefinedPlanIdsResponseType" nillable="false"/>
+	<xsd:element name="GetPlanDefinitionRequest" type="GetPlanDefinitionRequestType" nillable="false"/>
+	<xsd:element name="GetPlanDefinitionResponse" type="GetPlanDefinitionResponseType" nillable="false"/>
+	<xsd:element name="ActivatePlanRequest" type="ActivatePlanRequestType" nillable="false"/>
+	<xsd:element name="ActivatePlanResponse" type="ActivatePlanResponseType" nillable="false"/>
+	<xsd:element name="GetActivePlanIdsRequest" type="GetActivePlanIdsRequestType" nillable="false"/>
+	<xsd:element name="GetActivePlanIdsResponse" type="GetActivePlanIdsResponseType" nillable="false"/>
+	<xsd:element name="DeactivatePlanRequest" type="DeactivatePlanRequestType" nillable="false"/>
+	<xsd:element name="DeactivatePlanResponse" type="DeactivatePlanResponseType" nillable="false"/>
+	<xsd:element name="DeletePlanRequest" type="DeletePlanRequestType" nillable="false"/>
+	<xsd:element name="DeletePlanResponse" type="DeletePlanResponseType" nillable="false"/>
+	<xsd:element name="GetParameterValuesRequest" type="GetParameterValuesRequestType" nillable="false"/>
+	<xsd:element name="GetParameterValuesResponse" type="GetParameterValuesResponseType" nillable="false"/>
+	<xsd:element name="GetObjTypeInstanceIdsRequest" type="GetObjTypeInstanceIdsRequestType" nillable="false"/>
+	<xsd:element name="GetObjTypeInstanceIdsResponse" type="GetObjTypeInstanceIdsResponseType" nillable="false"/>
+	<xsd:element name="GetCurrentPerformanceStatusRequest" type="GetCurrentPerformanceStatusRequestType" nillable="false"/>
+	<xsd:element name="GetCurrentPerformanceStatusResponse" type="GetCurrentPerformanceStatusResponseType" nillable="false"/>
+	<xsd:element name="NewDataNotification" type="NewDataNotificationType" nillable="false"/>
+	<xsd:element name="PerformanceWarningNotification" type="PerformanceWarningNotificationType" nillable="false"/>
+	<xsd:element name="PerformanceRestoredNotification" type="PerformanceRestoredNotificationType" nillable="false"/>
+	<xsd:element name="DCPDeactivationNotification" type="DCPDeactivationNotificationType" nillable="false"/>
+	<xsd:element name="DCPHibernatedNotification" type="DCPHibernatedNotificationType" nillable="false"/>
+</xsd:schema>

@@ -1,0 +1,370 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<xsd:schema elementFormDefault="qualified" 
+    targetNamespace="urn:semi-org:xsd.E132-1.V0305.auth" 
+    xmlns="urn:semi-org:xsd.E132-1.V0305.auth"
+	xmlns:auth="urn:semi-org:xsd.E132-1.V0305.auth" 
+	xmlns:ccs="urn:semi-org:xsd.CommonComponents.V0305.ccs"
+	xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+<!--
+
+This document and the information contained herein is provided on an "AS IS" basis and to the maximum extent permitted by applicable law, SEMI provides the document AS IS AND WITH ALL FAULTS, and hereby disclaims all other warranties and conditions, either express, implied or statutory, including, but not limited to, any (if any) implied warranties, duties or conditions of merchantability, of fitness for a particular purpose, of accuracy or completeness of responses, of results, of workmanlike effort, of lack of viruses, and of lack of negligence, all with regard to the document. ALSO, THERE IS NO WARRANTY OR CONDITION OF TITLE, QUIET ENJOYMENT, QUIET POSSESSION, CORRESPONDENCE TO DESCRIPTION OR NON-INFRINGEMENT OF ANY INTELLECTUAL PROPERTY RIGHTS WITH REGARD TO THE DOCUMENT.
+ 
+IN NO EVENT WILL SEMI BE LIABLE TO ANY OTHER PARTY FOR THE COST OF PROCURING SUBSTITUTE GOODS OR SERVICES, LOST PROFITS, LOSS OF USE, LOSS OF DATA, OR ANY INCIDENTAL, CONSEQUENTIAL, DIRECT, INDIRECT, OR SPECIAL DAMAGES WHETHER UNDER CONTRACT, TORT, WARRANTY, OR OTHERWISE, ARISING IN ANY WAY OUT OF THIS OR ANY OTHER AGREEMENT RELATING TO THIS DOCUMENT, WHETHER OR NOT SUCH PARTY HAD ADVANCE NOTICE OF THE POSSIBILITY OF SUCH DAMAGES.
+
+-->
+
+  <!-- I M P O R T S -->
+  <xsd:import namespace="urn:semi-org:xsd.CommonComponents.V0305.ccs" schemaLocation="CommonComponents-V0305-Schema.xsd" />
+
+	<!-- T Y P E   D E F I N I T I O N S -->
+	<xsd:complexType name="EndPointType">
+		<xsd:sequence></xsd:sequence>	
+	</xsd:complexType>
+	<xsd:complexType name="HTTPEndPointType" final="#all">
+		<xsd:complexContent>
+			<xsd:extension base="EndPointType">
+  		        <xsd:sequence>
+			        <xsd:element name="URL" type="xsd:anyURI" minOccurs="1" maxOccurs="1" nillable="false" />
+		        </xsd:sequence>
+			</xsd:extension>
+		</xsd:complexContent>
+	</xsd:complexType>
+	<xsd:complexType name="EndPointSelectorType" final="#all">
+		<xsd:choice>
+			<xsd:element name="HTTPEndPoint" type="HTTPEndPointType" minOccurs="1" maxOccurs="1" nillable="false" />
+		</xsd:choice>
+	</xsd:complexType>
+	<xsd:complexType name="ActiveSessionType" final="#all">
+		<xsd:sequence>
+			<xsd:element name="SessionID" type="xsd:string" minOccurs="1" maxOccurs="1" nillable="false" />
+			<xsd:element name="IsPersistent" type="xsd:boolean" minOccurs="1" maxOccurs="1" nillable="false" />
+			<xsd:element name="ClientID" type="xsd:string" minOccurs="1" maxOccurs="1" nillable="false" />
+			<xsd:element name="SessionEndPoint" type="EndPointSelectorType" minOccurs="1" maxOccurs="1" nillable="false" />
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:complexType name="PrincipalType" final="#all">
+		<xsd:complexContent>
+			<xsd:extension base="SubjectType"></xsd:extension>
+		</xsd:complexContent>
+	</xsd:complexType>
+	<xsd:complexType name="RoleType" final="#all">
+		<xsd:complexContent>
+			<xsd:extension base="SubjectType"></xsd:extension>
+		</xsd:complexContent>
+	</xsd:complexType>
+	<xsd:complexType name="SubjectType">
+		<xsd:sequence>
+			<xsd:element name="ID" type="xsd:string" minOccurs="1" maxOccurs="1" nillable="false" />
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:complexType name="RoleAssignmentType" final="#all">
+		<xsd:complexContent>
+			<xsd:extension base="ACLEntryType">
+				<xsd:sequence>
+					<xsd:element name="Principal" type="PrincipalType" minOccurs="1" maxOccurs="1" nillable="false"  />
+					<xsd:element name="Role" type="RoleType" minOccurs="1" maxOccurs="1" nillable="false"  />
+				</xsd:sequence>
+			</xsd:extension>
+		</xsd:complexContent>
+	</xsd:complexType>
+	<xsd:complexType name="PrivilegeType" final="#all">
+		<xsd:sequence>
+			<xsd:element name="PrivilegeId" type="xsd:string" minOccurs="1" maxOccurs="1" nillable="false" />
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:complexType name="SubjectSelectorType" final="#all">
+		<xsd:choice>
+			<xsd:element name="Principal" type="PrincipalType" minOccurs="1" maxOccurs="1" nillable="false" />
+			<xsd:element name="Role" type="RoleType" minOccurs="1" maxOccurs="1" nillable="false" />
+		</xsd:choice>
+	</xsd:complexType>
+	<xsd:complexType name="PrivilegeAssignmentType" final="#all">
+		<xsd:complexContent>
+			<xsd:extension base="ACLEntryType">
+				<xsd:sequence>
+					<xsd:element name="Subject" type="SubjectSelectorType" minOccurs="1" maxOccurs="1" nillable="false" />
+					<xsd:element name="Privilege" type="PrivilegeType" minOccurs="1" maxOccurs="unbounded" nillable="false" />
+				</xsd:sequence>	
+			</xsd:extension>
+		</xsd:complexContent>
+	</xsd:complexType>
+	<xsd:complexType name="ACLEntrySelectorType">
+		<xsd:choice>
+			<xsd:element name="PrivilegeAssignment" type="PrivilegeAssignmentType" minOccurs="1" maxOccurs="1" nillable="false" />
+			<xsd:element name="RoleAssignment" type="RoleAssignmentType" minOccurs="1" maxOccurs="1" nillable="false" />
+		</xsd:choice>
+	</xsd:complexType>
+	<xsd:complexType name="ACLEntryType">
+		<xsd:sequence></xsd:sequence>	
+	</xsd:complexType>
+	<xsd:complexType name="UnauthorizedOperationType" final="#all">
+		<xsd:sequence>
+			<xsd:element name="Description"  type="xsd:string" minOccurs="1" maxOccurs="1" nillable="false" />
+			<xsd:element name="RequiredPrivilege" type="PrivilegeType" minOccurs="1" maxOccurs="unbounded" nillable="false" />
+		</xsd:sequence>	
+	</xsd:complexType>
+	<xsd:complexType name="UnrecognizedPrivilegeType" final="#all">
+		<xsd:sequence>
+			<xsd:element name="Description"  type="xsd:string" minOccurs="1" maxOccurs="1" nillable="false" />
+			<xsd:element name="UnrecognizedPrivilege" type="PrivilegeType" minOccurs="1" maxOccurs="unbounded" nillable="false" />
+		</xsd:sequence>	
+	</xsd:complexType>
+	<xsd:complexType name="EstablishSessionRequestType" final="#all">
+		<xsd:sequence>
+			<xsd:element name="EndPoint" type="EndPointSelectorType" minOccurs="1" maxOccurs="1" nillable="false" />
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:complexType name="EstablishSessionErrorType" final="#all">
+		<xsd:sequence>
+			<xsd:element ref="ccs:Error" minOccurs="1" maxOccurs="1"/>
+			<xsd:choice minOccurs="0" maxOccurs="1">
+				<xsd:element name="UnauthorizedOperationError" type="UnauthorizedOperationType" minOccurs="1" maxOccurs="1" nillable="false"/>
+			</xsd:choice>
+		</xsd:sequence>
+	</xsd:complexType>	
+	<xsd:complexType name="EstablishSessionResponseType" final="#all">
+		<xsd:sequence>
+			<xsd:choice>
+				<xsd:element name="SessionID" type="xsd:string" minOccurs="1" maxOccurs="1" nillable="false" />
+				<xsd:element name="Error" type="EstablishSessionErrorType" minOccurs="1" maxOccurs="1" nillable="false"/>
+			</xsd:choice>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:complexType name="CloseSessionRequestType" final="#all">
+		<xsd:sequence>
+			<xsd:element name="SessionID" type="xsd:string" minOccurs="1" maxOccurs="1" nillable="false" />
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:complexType name="CloseSessionErrorType" final="#all">
+		<xsd:sequence>
+			<xsd:element ref="ccs:Error" minOccurs="1" maxOccurs="1"/>
+			<xsd:choice minOccurs="0" maxOccurs="1">
+				<xsd:element name="UnauthorizedOperationError" type="UnauthorizedOperationType" minOccurs="1" maxOccurs="1" nillable="false"/>
+			</xsd:choice>
+		</xsd:sequence>
+	</xsd:complexType>		
+	<xsd:complexType name="CloseSessionResponseType" final="#all">
+		<xsd:sequence>
+			<xsd:element name="Error" type="CloseSessionErrorType" minOccurs="0" maxOccurs="1" nillable="false"/>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:complexType name="SessionClosedNotificationType" final="#all">
+		<xsd:sequence>
+			<xsd:element name="SessionID" type="xsd:string" minOccurs="1" maxOccurs="1" nillable="false" />
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:complexType name="SessionPingRequestType" final="#all">
+		<xsd:sequence></xsd:sequence>
+	</xsd:complexType>
+	<xsd:complexType name="SessionPingResponseType" final="#all">
+		<xsd:sequence>
+			<xsd:choice>
+				<xsd:element name="ID" type="xsd:string" minOccurs="1" maxOccurs="1" nillable="false" />
+				<xsd:element ref="ccs:Error" minOccurs="1" maxOccurs="1"/>
+			</xsd:choice>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:complexType name="SessionFrozenNotificationType" final="#all">
+		<xsd:sequence></xsd:sequence>
+	</xsd:complexType>
+	<xsd:complexType name="PersistSessionRequestType" final="#all">
+		<xsd:sequence>
+			<xsd:element name="Persist" type="xsd:boolean" minOccurs="1" maxOccurs="1" nillable="false" />
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:complexType name="PersistSessionResponseType" final="#all">
+		<xsd:sequence>
+			<xsd:element ref="ccs:Error" minOccurs="0" maxOccurs="1"/>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:complexType name="DefinedPrivilegeType" final="#all">
+		<xsd:sequence>
+			<xsd:element name="PrivilegeID" type="xsd:string" minOccurs="1" maxOccurs="1" nillable="false" />
+			<xsd:element name="Description" type="xsd:string" minOccurs="1" maxOccurs="1" nillable="false" />
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:complexType name="GetDefinedPrivilegesRequestType" final="#all">
+		<xsd:sequence></xsd:sequence>
+	</xsd:complexType>
+	<xsd:complexType name="GetDefinedPrivilegesErrorType" final="#all">
+		<xsd:sequence>
+			<xsd:element ref="ccs:Error" minOccurs="1" maxOccurs="1"/>
+			<xsd:choice minOccurs="0" maxOccurs="1">
+				<xsd:element name="UnauthorizedOperationError" type="UnauthorizedOperationType" minOccurs="1" maxOccurs="1" nillable="false"/>
+			</xsd:choice>
+		</xsd:sequence>
+	</xsd:complexType>	
+	<xsd:complexType name="GetDefinedPrivilegesResponseType" final="#all">
+		<xsd:sequence>
+			<xsd:choice>
+				<xsd:element name="Privilege" type="DefinedPrivilegeType" minOccurs="1" maxOccurs="unbounded" nillable="false" />
+				<xsd:element name="Error" type="GetDefinedPrivilegesErrorType" minOccurs="1" maxOccurs="1" nillable="false"/>
+			</xsd:choice>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:complexType name="GetACLRequestType" final="#all">
+		<xsd:sequence></xsd:sequence>
+	</xsd:complexType>
+	<xsd:complexType name="GetACLErrorType" final="#all">
+		<xsd:sequence>
+			<xsd:element ref="ccs:Error" minOccurs="1" maxOccurs="1"/>
+			<xsd:choice minOccurs="0" maxOccurs="1">
+				<xsd:element name="UnauthorizedOperationError" type="UnauthorizedOperationType" minOccurs="1" maxOccurs="1" nillable="false"/>
+			</xsd:choice>
+		</xsd:sequence>
+	</xsd:complexType>		
+	<xsd:complexType name="GetACLResponseType" final="#all">
+		<xsd:sequence>
+			<xsd:choice>
+				<xsd:element name="ACL" type="ACLEntrySelectorType" minOccurs="1" maxOccurs="unbounded" nillable="false" />
+				<xsd:element name="Error" type="GetACLErrorType" minOccurs="1" maxOccurs="1" nillable="false"/>
+			</xsd:choice>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:complexType name="AddACLEntryRequestType" final="#all">
+		<xsd:sequence>
+			<xsd:element name="ACLEntry" type="ACLEntrySelectorType" minOccurs="1" maxOccurs="1" nillable="false" />
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:complexType name="AddACLEntryErrorType" final="#all">
+		<xsd:sequence>
+			<xsd:element ref="ccs:Error" minOccurs="1" maxOccurs="1"/>
+			<xsd:choice minOccurs="0" maxOccurs="1">
+				<xsd:element name="UnauthorizedOperationError" type="UnauthorizedOperationType" minOccurs="1" maxOccurs="1" nillable="false"/>
+				<xsd:element name="UnrecognizedPrivilegeError" type="UnrecognizedPrivilegeType" minOccurs="1" maxOccurs="1" nillable="false"/>
+			</xsd:choice>
+		</xsd:sequence>
+	</xsd:complexType>		
+	<xsd:complexType name="AddACLEntryResponseType" final="#all">
+		<xsd:sequence>
+			<xsd:element name="Error" type="AddACLEntryErrorType" minOccurs="0" maxOccurs="1" nillable="false"/>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:complexType name="DeleteACLEntryRequestType" final="#all">
+		<xsd:sequence>
+			<xsd:element name="SubjectID" type="xsd:string" minOccurs="1" maxOccurs="1" nillable="false" />
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:complexType name="DeleteACLEntryErrorType" final="#all">
+		<xsd:sequence>
+			<xsd:element ref="ccs:Error" minOccurs="1" maxOccurs="1"/>
+			<xsd:choice minOccurs="0" maxOccurs="1">
+				<xsd:element name="UnauthorizedOperationError" type="UnauthorizedOperationType" minOccurs="1" maxOccurs="1" nillable="false"/>
+			</xsd:choice>
+		</xsd:sequence>
+	</xsd:complexType>		
+	<xsd:complexType name="DeleteACLEntryResponseType" final="#all">
+		<xsd:sequence>
+			<xsd:element name="Error" type="DeleteACLEntryErrorType" minOccurs="0" maxOccurs="1" nillable="false"/>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:complexType name="GetActiveSessionsRequestType" final="#all">
+		<xsd:sequence></xsd:sequence>
+	</xsd:complexType>
+	<xsd:complexType name="GetActiveSessionsErrorType" final="#all">
+		<xsd:sequence>
+			<xsd:element ref="ccs:Error" minOccurs="1" maxOccurs="1"/>
+			<xsd:choice minOccurs="0" maxOccurs="1">
+				<xsd:element name="UnauthorizedOperationError" type="UnauthorizedOperationType" minOccurs="1" maxOccurs="1" nillable="false"/>
+			</xsd:choice>
+		</xsd:sequence>
+	</xsd:complexType>		
+	<xsd:complexType name="GetActiveSessionsResponseType" final="#all">
+		<xsd:sequence>
+			<xsd:choice>
+				<xsd:element name="ActiveSession" type="ActiveSessionType" minOccurs="0" maxOccurs="unbounded" nillable="false" />
+				<xsd:element name="Error" type="GetActiveSessionsErrorType" minOccurs="1" maxOccurs="1" nillable="false"/>
+			</xsd:choice>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:complexType name="SetMaxSessionsRequestType" final="#all">
+		<xsd:sequence>
+			<xsd:element name="MaxSessions" type="xsd:int" minOccurs="1" maxOccurs="1" nillable="false" />
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:complexType name="SetMaxSessionsErrorType" final="#all">
+		<xsd:sequence>
+			<xsd:element ref="ccs:Error" minOccurs="1" maxOccurs="1"/>
+			<xsd:choice minOccurs="0" maxOccurs="1">
+				<xsd:element name="UnauthorizedOperationError" type="UnauthorizedOperationType" minOccurs="1" maxOccurs="1" nillable="false"/>
+			</xsd:choice>
+		</xsd:sequence>
+	</xsd:complexType>		
+	<xsd:complexType name="SetMaxSessionsResponseType" final="#all">
+		<xsd:sequence>
+			<xsd:choice>
+				<xsd:element name="SessionCount" type="xsd:int" minOccurs="1" maxOccurs="1" nillable="false" />
+				<xsd:element name="Error" type="SetMaxSessionsErrorType" minOccurs="1" maxOccurs="1" nillable="false"/>
+			</xsd:choice>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:complexType name="GetMaxSessionsRequestType" final="#all">
+		<xsd:sequence>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:complexType name="GetMaxSessionsErrorType" final="#all">
+		<xsd:sequence>
+			<xsd:element ref="ccs:Error" minOccurs="1" maxOccurs="1"/>
+			<xsd:choice minOccurs="0" maxOccurs="1">
+				<xsd:element name="UnauthorizedOperationError" type="UnauthorizedOperationType" minOccurs="1" maxOccurs="1" nillable="false"/>
+			</xsd:choice>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:complexType name="GetMaxSessionsResponseBodyType">
+        <xsd:sequence>
+            <xsd:element name="MaxSessions" type="xsd:int" minOccurs="1" maxOccurs="1" nillable="false" />
+            <xsd:element name="SessionCount" type="xsd:int" minOccurs="1" maxOccurs="1" nillable="false" />
+        </xsd:sequence>
+    </xsd:complexType>
+	<xsd:complexType name="GetMaxSessionsResponseType" final="#all">
+		<xsd:sequence>
+			<xsd:choice>
+                <xsd:element name="GetMaxSessionsResponseBody" type="GetMaxSessionsResponseBodyType" minOccurs="1" maxOccurs="1"
+        nillable="false" />
+				<xsd:element name="Error" type="GetMaxSessionsErrorType" minOccurs="1" maxOccurs="1" nillable="false"/>
+			</xsd:choice>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:complexType name="E132HeaderType" final="#all">
+		<xsd:sequence>
+			<xsd:element name="SessionID" type="xsd:string" minOccurs="1" maxOccurs="1" nillable="false" />
+			<xsd:element name="From" type="xsd:string" minOccurs="1" maxOccurs="1" nillable="false" />
+			<xsd:element name="To" type="xsd:string" minOccurs="1" maxOccurs="1" nillable="false" />
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:complexType name="E132HashHeaderType" final="#all">
+		<xsd:sequence>
+			<xsd:element name="SessionIDHash" type="xsd:base64Binary" minOccurs="1" maxOccurs="1" nillable="false" />
+			<xsd:element name="From" type="xsd:string" minOccurs="1" maxOccurs="1" nillable="false" />
+			<xsd:element name="To" type="xsd:string" minOccurs="1" maxOccurs="1" nillable="false" />
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:element name="E132Header" type="E132HeaderType" final="#all" />
+	<xsd:element name="E132HashHeader" type="E132HashHeaderType" final="#all" />
+	<xsd:element name="SessionID" type="xsd:string" final="#all" />
+	<xsd:element name="SessionIDHash" type="xsd:base64Binary" final="#all" />
+	<xsd:element name="EstablishSessionRequest" type="EstablishSessionRequestType" final="#all" />
+	<xsd:element name="EstablishSessionResponse" type="EstablishSessionResponseType" final="#all" />
+	<xsd:element name="CloseSessionRequest" type="CloseSessionRequestType" final="#all" />
+	<xsd:element name="CloseSessionResponse" type="CloseSessionResponseType" final="#all" />
+	<xsd:element name="SessionClosedNotification" type="SessionClosedNotificationType" final="#all" />
+	<xsd:element name="SessionPingRequest" type="SessionPingRequestType" final="#all" />
+	<xsd:element name="SessionPingResponse" type="SessionPingResponseType" final="#all" />
+	<xsd:element name="PersistSessionRequest" type="PersistSessionRequestType" final="#all" />
+	<xsd:element name="PersistSessionResponse" type="PersistSessionResponseType" final="#all" />
+	<xsd:element name="SessionFrozenNotification" type="SessionFrozenNotificationType" final="#all" />
+	<xsd:element name="GetDefinedPrivilegesRequest" type="GetDefinedPrivilegesRequestType" final="#all" />
+	<xsd:element name="GetDefinedPrivilegesResponse" type="GetDefinedPrivilegesResponseType" final="#all" />
+	<xsd:element name="GetACLRequest" type="GetACLRequestType" final="#all" />
+	<xsd:element name="GetACLResponse" type="GetACLResponseType" final="#all" />
+	<xsd:element name="AddACLEntryRequest" type="AddACLEntryRequestType" final="#all" />
+	<xsd:element name="AddACLEntryResponse" type="AddACLEntryResponseType" final="#all" />
+	<xsd:element name="DeleteACLEntryRequest" type="DeleteACLEntryRequestType" final="#all" />
+	<xsd:element name="DeleteACLEntryResponse" type="DeleteACLEntryResponseType" final="#all" />
+	<xsd:element name="GetActiveSessionsRequest" type="GetActiveSessionsRequestType" final="#all" />
+	<xsd:element name="GetActiveSessionsResponse" type="GetActiveSessionsResponseType" final="#all" />
+	<xsd:element name="SetMaxSessionsRequest" type="SetMaxSessionsRequestType" final="#all" />
+	<xsd:element name="SetMaxSessionsResponse" type="SetMaxSessionsResponseType" final="#all" />
+	<xsd:element name="GetMaxSessionsRequest" type="GetMaxSessionsRequestType" final="#all" />
+	<xsd:element name="GetMaxSessionsResponse" type="GetMaxSessionsResponseType" final="#all" />
+</xsd:schema>

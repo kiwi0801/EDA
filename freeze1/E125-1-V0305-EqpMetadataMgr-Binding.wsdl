@@ -1,0 +1,115 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<wsdl:definitions name="ESDEquipment" targetNamespace="urn:semi-org:ws.E125-1.V0305.esdMetaEqp-binding" xmlns="urn:semi-org:ws.E125-1.V0305.esdMetaEqp-binding" xmlns:eqmport="urn:semi-org:ws.E125-1.V0305.esdMetaEqp-portType" xmlns:eqmbind="urn:semi-org:ws.E125-1.V0305.esdMetaEqp-binding" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">
+	<!--
+
+NOTICE: SEMI makes no warranties or representations as to the suitability of the standards set forth herein for any particular application. The determination of the suitability of the standard is solely the responsibility of the user. Users are cautioned to refer to manufacturer's instructions, product labels, product data sheets, and other relevant literature, respecting any materials or equipment mentioned herein. These standards are subject to change without notice.
+
+By publication of this standard, Semiconductor Equipment and Materials International (SEMI) takes no position respecting the validity of any patent rights or copyrights asserted in connection with any items mentioned in this standard. Users of this standard are expressly advised that determination of any such patent rights or copyrights, and the risk of infringement of such rights are entirely their own responsibility.
+
+-->
+	<!-- I M P O R T S -->
+	<wsdl:import namespace="urn:semi-org:ws.E125-1.V0305.esdMetaEqp-portType" location="E125-1-V0305-EqpMetadataMgr-PortType.wsdl"/>
+	<!-- B I N D I N G   D E F I N I T I O N S -->
+	<wsdl:binding name="EquipmentMetadataManagerBinding" type="eqmport:EquipmentMetadataManager">
+		<soap:binding style="document" transport="http://schemas.xmlsoap.org/soap/http"/>
+		<wsdl:operation name="GetTypeDefinitions">
+			<soap:operation style="document" soapAction="urn:semi-org:ws.E125-1.V0305.esdMetaEqp-binding:GetTypeDefinitions"/>
+			<wsdl:input name="GetTypeDefinitionsIn">
+				<soap:header message="eqmport:E132HeaderMessage" part="E132Header" use="literal" required="true"/>
+				<soap:body use="literal"/>
+			</wsdl:input>
+			<wsdl:output name="GetTypeDefinitionsOut">
+				<soap:header message="eqmport:E132HeaderMessage" part="E132Header" use="literal" required="true"/>
+				<soap:body use="literal"/>
+			</wsdl:output>
+		</wsdl:operation>
+		<wsdl:operation name="GetEquipmentStructure">
+			<soap:operation style="document" soapAction="urn:semi-org:ws.E125-1.V0305.esdMetaEqp-binding:GetEquipmentStructure"/>
+			<wsdl:input name="GetEquipmentStructureIn">
+				<soap:header message="eqmport:E132HeaderMessage" part="E132Header" use="literal" required="true"/>
+				<soap:body use="literal"/>
+			</wsdl:input>
+			<wsdl:output name="GetEquipmentStructureOut">
+				<soap:header message="eqmport:E132HeaderMessage" part="E132Header" use="literal" required="true"/>
+				<soap:body use="literal"/>
+			</wsdl:output>
+		</wsdl:operation>
+		<wsdl:operation name="GetEquipmentNodeDescriptions">
+			<soap:operation style="document" soapAction="urn:semi-org:ws.E125-1.V0305.esdMetaEqp-binding:GetEquipmentNodeDescriptions"/>
+			<wsdl:input name="GetEquipmentNodeDescriptionsIn">
+				<soap:header message="eqmport:E132HeaderMessage" part="E132Header" use="literal" required="true"/>
+				<soap:body use="literal"/>
+			</wsdl:input>
+			<wsdl:output name="GetEquipmentNodeDescriptionsOut">
+				<soap:header message="eqmport:E132HeaderMessage" part="E132Header" use="literal" required="true"/>
+				<soap:body use="literal"/>
+			</wsdl:output>
+		</wsdl:operation>
+		<wsdl:operation name="GetUnits">
+			<soap:operation style="document" soapAction="urn:semi-org:ws.E125-1.V0305.esdMetaEqp-binding:GetUnits"/>
+			<wsdl:input name="GetUnitsIn">
+				<soap:header message="eqmport:E132HeaderMessage" part="E132Header" use="literal" required="true"/>
+				<soap:body use="literal"/>
+			</wsdl:input>
+			<wsdl:output name="GetUnitsOut">
+				<soap:header message="eqmport:E132HeaderMessage" part="E132Header" use="literal" required="true"/>
+				<soap:body use="literal"/>
+			</wsdl:output>
+		</wsdl:operation>
+		<wsdl:operation name="GetStateMachines">
+			<soap:operation style="document" soapAction="urn:semi-org:ws.E125-1.V0305.esdMetaEqp-binding:GetStateMachines"/>
+			<wsdl:input name="GetStateMachinesIn">
+				<soap:header message="eqmport:E132HeaderMessage" part="E132Header" use="literal" required="true"/>
+				<soap:body use="literal"/>
+			</wsdl:input>
+			<wsdl:output name="GetStateMachinesOut">
+				<soap:header message="eqmport:E132HeaderMessage" part="E132Header" use="literal" required="true"/>
+				<soap:body use="literal"/>
+			</wsdl:output>
+		</wsdl:operation>
+		<wsdl:operation name="GetSEMIObjTypes">
+			<soap:operation style="document" soapAction="urn:semi-org:ws.E125-1.V0305.esdMetaEqp-binding:GetSEMIObjTypes"/>
+			<wsdl:input name="GetSEMIObjTypesIn">
+				<soap:header message="eqmport:E132HeaderMessage" part="E132Header" use="literal" required="true"/>
+				<soap:body use="literal"/>
+			</wsdl:input>
+			<wsdl:output name="GetSEMIObjTypesOut">
+				<soap:header message="eqmport:E132HeaderMessage" part="E132Header" use="literal" required="true"/>
+				<soap:body use="literal"/>
+			</wsdl:output>
+		</wsdl:operation>
+		<wsdl:operation name="GetExceptions">
+			<soap:operation style="document" soapAction="urn:semi-org:ws.E125-1.V0305.esdMetaEqp-binding:GetExceptions"/>
+			<wsdl:input name="GetExceptionsIn">
+				<soap:header message="eqmport:E132HeaderMessage" part="E132Header" use="literal" required="true"/>
+				<soap:body use="literal"/>
+			</wsdl:input>
+			<wsdl:output name="GetExceptionsOut">
+				<soap:header message="eqmport:E132HeaderMessage" part="E132Header" use="literal" required="true"/>
+				<soap:body use="literal"/>
+			</wsdl:output>
+		</wsdl:operation>
+		<wsdl:operation name="GetLatestRevision">
+			<soap:operation style="document" soapAction="urn:semi-org:ws.E125-1.V0305.esdMetaEqp-binding:GetLatestRevision"/>
+			<wsdl:input name="GetLatestRevisionIn">
+				<soap:header message="eqmport:E132HeaderMessage" part="E132Header" use="literal" required="true"/>
+				<soap:body use="literal"/>
+			</wsdl:input>
+			<wsdl:output name="GetLatestRevisionOut">
+				<soap:header message="eqmport:E132HeaderMessage" part="E132Header" use="literal" required="true"/>
+				<soap:body use="literal"/>
+			</wsdl:output>
+		</wsdl:operation>
+		<wsdl:operation name="NotifyOnRevisions">
+			<soap:operation style="document" soapAction="urn:semi-org:ws.E125-1.V0305.esdMetaEqp-binding:NotifyOnRevisions"/>
+			<wsdl:input name="NotifyOnRevisionsIn">
+				<soap:header message="eqmport:E132HeaderMessage" part="E132Header" use="literal" required="true"/>
+				<soap:body use="literal"/>
+			</wsdl:input>
+			<wsdl:output name="NotifyOnRevisionsOut">
+				<soap:header message="eqmport:E132HeaderMessage" part="E132Header" use="literal" required="true"/>
+				<soap:body use="literal"/>
+			</wsdl:output>
+		</wsdl:operation>
+	</wsdl:binding>
+</wsdl:definitions>

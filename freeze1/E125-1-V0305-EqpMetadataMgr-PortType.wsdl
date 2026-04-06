@@ -1,0 +1,114 @@
+<?xml version="1.0" encoding="utf-8"?>
+<wsdl:definitions name="ESDEquipment" targetNamespace="urn:semi-org:ws.E125-1.V0305.esdMetaEqp-portType" xmlns="urn:semi-org:ws.E125-1.V0305.esdMetaEqp-portType" xmlns:auth="urn:semi-org:xsd.E132-1.V0305.auth" xmlns:esd="urn:semi-org:xsd.E125-1.V0305.esd" xmlns:eqmport="urn:semi-org:ws.E125-1.V0305.esdMetaEqp-portType" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+	<!--
+
+NOTICE: SEMI makes no warranties or representations as to the suitability of the standards set forth herein for any particular application. The determination of the suitability of the standard is solely the responsibility of the user. Users are cautioned to refer to manufacturer's instructions, product labels, product data sheets, and other relevant literature, respecting any materials or equipment mentioned herein. These standards are subject to change without notice.
+
+By publication of this standard, Semiconductor Equipment and Materials International (SEMI) takes no position respecting the validity of any patent rights or copyrights asserted in connection with any items mentioned in this standard. Users of this standard are expressly advised that determination of any such patent rights or copyrights, and the risk of infringement of such rights are entirely their own responsibility.
+
+-->
+	<!-- I M P O R T S -->
+	<wsdl:types>
+		<xsd:schema>
+			<xsd:import namespace="urn:semi-org:xsd.E125-1.V0305.esd" schemaLocation="E125-1-V0305-Schema.xsd"/>
+			<xsd:import namespace="urn:semi-org:xsd.E132-1.V0305.auth" schemaLocation="E132-1-V0305-Schema.xsd"/>
+		</xsd:schema>
+	</wsdl:types>
+	<!-- M E S S A G E   D E F I N I T I O N S -->
+	<wsdl:message name="E132HeaderMessage">
+		<wsdl:part name="E132Header" element="auth:E132Header"/>
+	</wsdl:message>
+	<wsdl:message name="GetTypeDefinitionsRequestMessage">
+		<wsdl:part name="GetTypeDefinitionsRequest" element="esd:GetTypeDefinitionsRequest"/>
+	</wsdl:message>
+	<wsdl:message name="GetTypeDefinitionsResponseMessage">
+		<wsdl:part name="GetTypeDefinitionsResponse" element="esd:GetTypeDefinitionsResponse"/>
+	</wsdl:message>
+	<wsdl:message name="GetEquipmentStructureRequestMessage">
+		<wsdl:part name="GetEquipmentStructureRequest" element="esd:GetEquipmentStructureRequest"/>
+	</wsdl:message>
+	<wsdl:message name="GetEquipmentStructureResponseMessage">
+		<wsdl:part name="GetEquipmentStructureResponse" element="esd:GetEquipmentStructureResponse"/>
+	</wsdl:message>
+	<wsdl:message name="GetEquipmentNodeDescriptionsRequestMessage">
+		<wsdl:part name="GetEquipmentNodeDescriptionsRequest" element="esd:GetEquipmentNodeDescriptionsRequest"/>
+	</wsdl:message>
+	<wsdl:message name="GetEquipmentNodeDescriptionsResponseMessage">
+		<wsdl:part name="GetEquipmentNodeDescriptionsResponse" element="esd:GetEquipmentNodeDescriptionsResponse"/>
+	</wsdl:message>
+	<wsdl:message name="GetUnitsRequestMessage">
+		<wsdl:part name="GetUnitsRequest" element="esd:GetUnitsRequest"/>
+	</wsdl:message>
+	<wsdl:message name="GetUnitsResponseMessage">
+		<wsdl:part name="GetUnitsResponse" element="esd:GetUnitsResponse"/>
+	</wsdl:message>
+	<wsdl:message name="GetStateMachinesRequestMessage">
+		<wsdl:part name="GetStateMachinesRequest" element="esd:GetStateMachinesRequest"/>
+	</wsdl:message>
+	<wsdl:message name="GetStateMachinesResponseMessage">
+		<wsdl:part name="GetStateMachinesResponse" element="esd:GetStateMachinesResponse"/>
+	</wsdl:message>
+	<wsdl:message name="GetSEMIObjTypesRequestMessage">
+		<wsdl:part name="GetSEMIObjTypesRequest" element="esd:GetSEMIObjTypesRequest"/>
+	</wsdl:message>
+	<wsdl:message name="GetSEMIObjTypesResponseMessage">
+		<wsdl:part name="GetSEMIObjTypesResponse" element="esd:GetSEMIObjTypesResponse"/>
+	</wsdl:message>
+	<wsdl:message name="GetExceptionsRequestMessage">
+		<wsdl:part name="GetExceptionsRequest" element="esd:GetExceptionsRequest"/>
+	</wsdl:message>
+	<wsdl:message name="GetExceptionsResponseMessage">
+		<wsdl:part name="GetExceptionsResponse" element="esd:GetExceptionsResponse"/>
+	</wsdl:message>
+	<wsdl:message name="GetLatestRevisionRequestMessage">
+		<wsdl:part name="GetLatestRevisionRequest" element="esd:GetLatestRevisionRequest"/>
+	</wsdl:message>
+	<wsdl:message name="GetLatestRevisionResponseMessage">
+		<wsdl:part name="GetLatestRevisionResponse" element="esd:GetLatestRevisionResponse"/>
+	</wsdl:message>
+	<wsdl:message name="NotifyOnRevisionsRequestMessage">
+		<wsdl:part name="NotifyOnRevisionsRequest" element="esd:NotifyOnRevisionsRequest"/>
+	</wsdl:message>
+	<wsdl:message name="NotifyOnRevisionsResponseMessage">
+		<wsdl:part name="NotifyOnRevisionsResponse" element="esd:NotifyOnRevisionsResponse"/>
+	</wsdl:message>
+	<!-- P O R T   T Y P E   D E F I N I T I O N S -->
+	<wsdl:portType name="EquipmentMetadataManager">
+		<wsdl:operation name="GetTypeDefinitions">
+			<wsdl:input name="GetTypeDefinitionsIn" message="GetTypeDefinitionsRequestMessage"/>
+			<wsdl:output name="GetTypeDefinitionsOut" message="GetTypeDefinitionsResponseMessage"/>
+		</wsdl:operation>
+		<wsdl:operation name="GetEquipmentStructure">
+			<wsdl:input name="GetEquipmentStructureIn" message="GetEquipmentStructureRequestMessage"/>
+			<wsdl:output name="GetEquipmentStructureOut" message="GetEquipmentStructureResponseMessage"/>
+		</wsdl:operation>
+		<wsdl:operation name="GetEquipmentNodeDescriptions">
+			<wsdl:input name="GetEquipmentNodeDescriptionsIn" message="GetEquipmentNodeDescriptionsRequestMessage"/>
+			<wsdl:output name="GetEquipmentNodeDescriptionsOut" message="GetEquipmentNodeDescriptionsResponseMessage"/>
+		</wsdl:operation>
+		<wsdl:operation name="GetUnits">
+			<wsdl:input name="GetUnitsIn" message="GetUnitsRequestMessage"/>
+			<wsdl:output name="GetUnitsOut" message="GetUnitsResponseMessage"/>
+		</wsdl:operation>
+		<wsdl:operation name="GetStateMachines">
+			<wsdl:input name="GetStateMachinesIn" message="GetStateMachinesRequestMessage"/>
+			<wsdl:output name="GetStateMachinesOut" message="GetStateMachinesResponseMessage"/>
+		</wsdl:operation>
+		<wsdl:operation name="GetSEMIObjTypes">
+			<wsdl:input name="GetSEMIObjTypesIn" message="GetSEMIObjTypesRequestMessage"/>
+			<wsdl:output name="GetSEMIObjTypesOut" message="GetSEMIObjTypesResponseMessage"/>
+		</wsdl:operation>
+		<wsdl:operation name="GetExceptions">
+			<wsdl:input name="GetExceptionsIn" message="GetExceptionsRequestMessage"/>
+			<wsdl:output name="GetExceptionsOut" message="GetExceptionsResponseMessage"/>
+		</wsdl:operation>
+		<wsdl:operation name="GetLatestRevision">
+			<wsdl:input name="GetLatestRevisionIn" message="GetLatestRevisionRequestMessage"/>
+			<wsdl:output name="GetLatestRevisionOut" message="GetLatestRevisionResponseMessage"/>
+		</wsdl:operation>
+		<wsdl:operation name="NotifyOnRevisions">
+			<wsdl:input name="NotifyOnRevisionsIn" message="NotifyOnRevisionsRequestMessage"/>
+			<wsdl:output name="NotifyOnRevisionsOut" message="NotifyOnRevisionsResponseMessage"/>
+		</wsdl:operation>
+	</wsdl:portType>
+</wsdl:definitions>

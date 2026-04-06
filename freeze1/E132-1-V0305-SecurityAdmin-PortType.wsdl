@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<wsdl:definitions name="SecurityAdmin"
+    xmlns="urn:semi-org:ws.E132-1.V0305.secAdmin-portType"
+    targetNamespace="urn:semi-org:ws.E132-1.V0305.secAdmin-portType"
+    xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/"
+    xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+    xmlns:auth="urn:semi-org:xsd.E132-1.V0305.auth"
+	xmlns:SAPort="urn:semi-org:ws.E132-1.V0305.secAdmin-portType">
+<!--
+
+This document and the information contained herein is provided on an "AS IS" basis and to the maximum extent permitted by applicable law, SEMI provides the document AS IS AND WITH ALL FAULTS, and hereby disclaims all other warranties and conditions, either express, implied or statutory, including, but not limited to, any (if any) implied warranties, duties or conditions of merchantability, of fitness for a particular purpose, of accuracy or completeness of responses, of results, of workmanlike effort, of lack of viruses, and of lack of negligence, all with regard to the document. ALSO, THERE IS NO WARRANTY OR CONDITION OF TITLE, QUIET ENJOYMENT, QUIET POSSESSION, CORRESPONDENCE TO DESCRIPTION OR NON-INFRINGEMENT OF ANY INTELLECTUAL PROPERTY RIGHTS WITH REGARD TO THE DOCUMENT.
+ 
+IN NO EVENT WILL SEMI BE LIABLE TO ANY OTHER PARTY FOR THE COST OF PROCURING SUBSTITUTE GOODS OR SERVICES, LOST PROFITS, LOSS OF USE, LOSS OF DATA, OR ANY INCIDENTAL, CONSEQUENTIAL, DIRECT, INDIRECT, OR SPECIAL DAMAGES WHETHER UNDER CONTRACT, TORT, WARRANTY, OR OTHERWISE, ARISING IN ANY WAY OUT OF THIS OR ANY OTHER AGREEMENT RELATING TO THIS DOCUMENT, WHETHER OR NOT SUCH PARTY HAD ADVANCE NOTICE OF THE POSSIBILITY OF SUCH DAMAGES.
+
+-->
+
+	<!-- I M P O R T S -->
+    <wsdl:types>
+		<xsd:schema>
+			<xsd:import namespace="urn:semi-org:xsd.E132-1.V0305.auth" schemaLocation="E132-1-V0305-Schema.xsd"/>
+		</xsd:schema>
+	</wsdl:types>
+
+	<!-- M E S S A G E   D E F I N I T I O N S -->
+	<wsdl:message name="E132HeaderMessage">
+		<wsdl:part name="E132Header" element="auth:E132Header"/>
+	</wsdl:message>
+    <wsdl:message name="GetDefinedPrivilegesRequestMessage">
+        <wsdl:part name="GetDefinedPrivilegesRequest" element="auth:GetDefinedPrivilegesRequest"/>
+    </wsdl:message>
+    <wsdl:message name="GetDefinedPrivilegesResponseMessage">
+        <wsdl:part name="GetDefinedPrivilegesResponse" element="auth:GetDefinedPrivilegesResponse"/>
+    </wsdl:message>
+    <wsdl:message name="GetACLRequestMessage">
+        <wsdl:part name="GetACLRequest" element="auth:GetACLRequest"/>
+    </wsdl:message>
+    <wsdl:message name="GetACLResponseMessage">
+        <wsdl:part name="GetACLResponse" element="auth:GetACLResponse"/>
+    </wsdl:message>
+    <wsdl:message name="AddACLEntryRequestMessage">
+        <wsdl:part name="AddACLEntryRequest" element="auth:AddACLEntryRequest"/>
+    </wsdl:message>
+    <wsdl:message name="AddACLEntryResponseMessage">
+        <wsdl:part name="AddACLEntryResponse" element="auth:AddACLEntryResponse"/>
+    </wsdl:message>
+    <wsdl:message name="DeleteACLEntryRequestMessage">
+        <wsdl:part name="DeleteACLEntryRequest" element="auth:DeleteACLEntryRequest"/>
+    </wsdl:message>
+    <wsdl:message name="DeleteACLEntryResponseMessage">
+        <wsdl:part name="DeleteACLEntryResponse" element="auth:DeleteACLEntryResponse"/>
+    </wsdl:message>
+    <wsdl:message name="GetActiveSessionsRequestMessage">
+        <wsdl:part name="GetActiveSessionsRequest" element="auth:GetActiveSessionsRequest"/>
+    </wsdl:message>
+    <wsdl:message name="GetActiveSessionsResponseMessage">
+        <wsdl:part name="GetActiveSessionsResponse" element="auth:GetActiveSessionsResponse"/>
+    </wsdl:message>
+    <wsdl:message name="SetMaxSessionsRequestMessage">
+        <wsdl:part name="SetMaxSessionsRequest" element="auth:SetMaxSessionsRequest"/>
+    </wsdl:message>
+    <wsdl:message name="SetMaxSessionsResponseMessage">
+        <wsdl:part name="SetMaxSessionsResponse" element="auth:SetMaxSessionsResponse"/>
+    </wsdl:message>
+    <wsdl:message name="GetMaxSessionsRequestMessage">
+        <wsdl:part name="GetMaxSessionsRequest" element="auth:GetMaxSessionsRequest"/>
+    </wsdl:message>
+    <wsdl:message name="GetMaxSessionsResponseMessage">
+        <wsdl:part name="GetMaxSessionsResponse" element="auth:GetMaxSessionsResponse"/>
+    </wsdl:message>
+
+	<!-- P O R T   T Y P E   D E F I N I T I O N S -->
+    <wsdl:portType name="SecurityAdmin">
+        <wsdl:operation name="GetDefinedPrivileges">
+            <wsdl:input name="GetDefinedPrivilegesRequestIn" message="SAPort:GetDefinedPrivilegesRequestMessage"/>
+            <wsdl:output name="GetDefinedPrivilegesResponseOut" message="SAPort:GetDefinedPrivilegesResponseMessage"/>
+        </wsdl:operation>
+        <wsdl:operation name="GetACL">
+            <wsdl:input name="GetACLRequestIn" message="SAPort:GetACLRequestMessage"/>
+            <wsdl:output name="GetACLResponseOut" message="SAPort:GetACLResponseMessage"/>
+        </wsdl:operation>
+        <wsdl:operation name="AddACLEntry">
+            <wsdl:input name="AddACLEntryRequestIn" message="SAPort:AddACLEntryRequestMessage"/>
+            <wsdl:output name="AddACLEntryResponseOut" message="SAPort:AddACLEntryResponseMessage"/>
+        </wsdl:operation>
+        <wsdl:operation name="DeleteACLEntry">
+            <wsdl:input name="DeleteACLEntryRequestIn" message="SAPort:DeleteACLEntryRequestMessage"/>
+            <wsdl:output name="DeleteACLEntryResponseOut" message="SAPort:DeleteACLEntryResponseMessage"/>
+        </wsdl:operation>
+        <wsdl:operation name="GetActiveSessions">
+            <wsdl:input name="GetActiveSessionsRequestIn" message="SAPort:GetActiveSessionsRequestMessage"/>
+            <wsdl:output name="GetActiveSessionsResponseOut" message="SAPort:GetActiveSessionsResponseMessage"/>
+        </wsdl:operation>
+        <wsdl:operation name="SetMaxSessions">
+            <wsdl:input name="SetMaxSessionsRequestIn" message="SAPort:SetMaxSessionsRequestMessage"/>
+            <wsdl:output name="SetMaxSessionsResponseOut" message="SAPort:SetMaxSessionsResponseMessage"/>
+        </wsdl:operation>
+        <wsdl:operation name="GetMaxSessions">
+            <wsdl:input name="GetMaxSessionsRequestIn" message="SAPort:GetMaxSessionsRequestMessage"/>
+            <wsdl:output name="GetMaxSessionsResponseOut" message="SAPort:GetMaxSessionsResponseMessage"/>
+        </wsdl:operation>
+    </wsdl:portType>
+
+</wsdl:definitions>

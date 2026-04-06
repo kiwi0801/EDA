@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<wsdl:definitions name="SessionManager" 
+    xmlns="urn:semi-org:ws.E132-1.V0305.sessMgr-binding" 
+	targetNamespace="urn:semi-org:ws.E132-1.V0305.sessMgr-binding"
+	xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" 
+	xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/"
+	xmlns:SMPort="urn:semi-org:ws.E132-1.V0305.sessMgr-portType">
+	
+	
+	<!-- Import Port and messages -->
+    <wsdl:import namespace="urn:semi-org:ws.E132-1.V0305.sessMgr-portType" location="E132-1-V0305-SessionManager-PortType.wsdl"/>
+	
+	<wsdl:binding name="SessionManagerBinding" type="SMPort:SessionManager">
+		<soap:binding style="document" transport="http://schemas.xmlsoap.org/soap/http"/>
+		<wsdl:operation name="EstablishSession">
+			<soap:operation style="document" soapAction="urn:semi-org:ws.E132-1.V0305.SessionManagerBinding:EstablishSession"/>
+			<wsdl:input name="EstablishSessionRequestIn">
+                <soap:header message="SMPort:E132HeaderMessage" part="E132Header" use="literal" required="true"/>
+				<soap:body use="literal"/>
+			</wsdl:input>
+			<wsdl:output name="EstablishSessionResponseOut">
+                <soap:header message="SMPort:E132HeaderMessage" part="E132Header" use="literal" required="true"/>
+				<soap:body use="literal"/>
+			</wsdl:output>
+		</wsdl:operation>
+		<wsdl:operation name="CloseSession">
+			<soap:operation style="document" soapAction="urn:semi-org:ws.E132-1.V0305.SessionManagerBinding:CloseSession"/>
+			<wsdl:input name="CloseSessionRequestIn">
+                <soap:header message="SMPort:E132HeaderMessage" part="E132Header" use="literal" required="true"/>
+				<soap:body use="literal"/>
+			</wsdl:input>
+			<wsdl:output name="CloseSessionResponseOut">
+                <soap:header message="SMPort:E132HeaderMessage" part="E132Header" use="literal" required="true"/>
+				<soap:body use="literal"/>
+			</wsdl:output>
+		</wsdl:operation>
+		<wsdl:operation name="SessionPing">
+			<soap:operation style="document" soapAction="urn:semi-org:ws.E132-1.V0305.SessionManagerBinding:SessionPing"/>
+			<wsdl:input name="SessionPingRequestIn">
+                <soap:header message="SMPort:E132HeaderMessage" part="E132Header" use="literal" required="true"/>
+				<soap:body use="literal"/>
+			</wsdl:input>
+			<wsdl:output name="SessionPingResponseOut">
+                <soap:header message="SMPort:E132HeaderMessage" part="E132Header" use="literal" required="true"/>
+				<soap:body use="literal"/>
+			</wsdl:output>
+		</wsdl:operation>
+		<wsdl:operation name="PersistSession">
+			<soap:operation style="document" soapAction="urn:semi-org:ws.E132-1.V0305.SessionManagerBinding:PersistSession"/>
+			<wsdl:input name="PersistSessionRequestIn">
+                <soap:header message="SMPort:E132HeaderMessage" part="E132Header" use="literal" required="true"/>
+				<soap:body use="literal"/>
+			</wsdl:input>
+			<wsdl:output name="PersistSessionResponseOut">
+                <soap:header message="SMPort:E132HeaderMessage" part="E132Header" use="literal" required="true"/>
+				<soap:body use="literal"/>
+			</wsdl:output>
+		</wsdl:operation>
+	</wsdl:binding>
+
+</wsdl:definitions>

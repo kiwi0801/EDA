@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<wsdl:definitions name="SessionManager" 
+    xmlns="urn:semi-org:ws.E132-1.V0305.sessMgr-portType" 
+	targetNamespace="urn:semi-org:ws.E132-1.V0305.sessMgr-portType"
+	xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/"
+	xmlns:xsd="http://www.w3.org/2001/XMLSchema" 
+	xmlns:auth="urn:semi-org:xsd.E132-1.V0305.auth"
+	xmlns:SMPort="urn:semi-org:ws.E132-1.V0305.sessMgr-portType">
+	
+	<wsdl:types>
+		<xsd:schema>
+			<xsd:import namespace="urn:semi-org:xsd.E132-1.V0305.auth" schemaLocation="E132-1-V0305-Schema.xsd"/>
+		</xsd:schema>
+	</wsdl:types>
+	
+	<wsdl:message name="E132HeaderMessage">
+		<wsdl:part name="E132Header" element="auth:E132Header"/>
+	</wsdl:message>
+	<wsdl:message name="EstablishSessionRequestMessage">
+		<wsdl:part name="EstablishSessionRequest" element="auth:EstablishSessionRequest"/>
+	</wsdl:message>
+	<wsdl:message name="EstablishSessionResponseMessage">
+		<wsdl:part name="EstablishSessionResponse" element="auth:EstablishSessionResponse"/>
+	</wsdl:message>
+	<wsdl:message name="CloseSessionRequestMessage">
+		<wsdl:part name="CloseSessionRequest" element="auth:CloseSessionRequest"/>
+	</wsdl:message>
+	<wsdl:message name="CloseSessionResponseMessage">
+		<wsdl:part name="CloseSessionResponse" element="auth:CloseSessionResponse"/>
+	</wsdl:message>
+	<wsdl:message name="SessionPingRequestMessage">
+		<wsdl:part name="SessionPingRequest" element="auth:SessionPingRequest"/>
+	</wsdl:message>
+	<wsdl:message name="SessionPingResponseMessage">
+		<wsdl:part name="SessionPingResponse" element="auth:SessionPingResponse"/>
+	</wsdl:message>
+	<wsdl:message name="PersistSessionRequestMessage">
+		<wsdl:part name="PersistSessionRequest" element="auth:PersistSessionRequest"/>
+	</wsdl:message>
+	<wsdl:message name="PersistSessionResponseMessage">
+		<wsdl:part name="PersistSessionResponse" element="auth:PersistSessionResponse"/>
+	</wsdl:message>
+	
+	
+	<wsdl:portType name="SessionManager">
+		<wsdl:operation name="EstablishSession">
+			<wsdl:input name="EstablishSessionRequestIn" message="SMPort:EstablishSessionRequestMessage"/>
+			<wsdl:output name="EstablishSessionResponseOut" message="SMPort:EstablishSessionResponseMessage"/>
+		</wsdl:operation>
+		<wsdl:operation name="CloseSession">
+			<wsdl:input name="CloseSessionRequestIn" message="SMPort:CloseSessionRequestMessage"/>
+			<wsdl:output name="CloseSessionResponseOut" message="SMPort:CloseSessionResponseMessage"/>
+		</wsdl:operation>
+		<wsdl:operation name="SessionPing">
+			<wsdl:input name="SessionPingRequestIn" message="SMPort:SessionPingRequestMessage"/>
+			<wsdl:output name="SessionPingResponseOut" message="SMPort:SessionPingResponseMessage"/>
+		</wsdl:operation>
+		<wsdl:operation name="PersistSession">
+			<wsdl:input name="PersistSessionRequestIn" message="SMPort:PersistSessionRequestMessage"/>
+			<wsdl:output name="PersistSessionResponseOut" message="SMPort:PersistSessionResponseMessage"/>
+		</wsdl:operation>
+	</wsdl:portType>
+	
+</wsdl:definitions>

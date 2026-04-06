@@ -1,0 +1,262 @@
+<?xml version="1.0" encoding="utf-8"?>
+<xs:schema targetNamespace="urn:semi-org:xsd.E120-1.V1104.CommonEquipmentModel" xmlns="urn:semi-org:xsd.E120-1.V1104.CommonEquipmentModel" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:e120="urn:semi-org:xsd.E120-1.V1104.CommonEquipmentModel" elementFormDefault="qualified">
+	<xs:simpleType name="UuidType" final="#all">
+		<xs:restriction base="xs:anyURI">
+			<xs:pattern value="[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="LocatorType" final="#all">
+		<xs:restriction base="xs:string">
+			<xs:pattern value="(([a-zA-Z])|([a-zA-Z][a-zA-Z\-_. 0-9]*[a-zA-Z\-_.0-9]))(/(([a-zA-Z])|([a-zA-Z][a-zA-Z\-_. 0-9]*[a-zA-Z\-_.0-9])))*"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="NameType" final="#all">
+		<xs:restriction base="xs:string">
+			<xs:pattern value="([a-zA-Z])|([a-zA-Z][a-zA-Z\-_. 0-9]*[a-zA-Z\-_.0-9])"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="MaterialTypeEnum" final="#all">
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="Carrier"/>
+			<xs:enumeration value="ProcessDurable"/>
+			<xs:enumeration value="Substrate"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="ProcessTypeEnum" final="#all">
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="Measurement"/>
+			<xs:enumeration value="Process"/>
+			<xs:enumeration value="Storage"/>
+			<xs:enumeration value="Transport"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:complexType name="ExtensionType">
+		<xs:sequence>
+			<xs:element name="NameableRef" type="UuidType"/>
+			<xs:any/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="ExtensionArrayType" final="#all">
+		<xs:sequence>
+			<xs:element name="Extension" type="e120:ExtensionType" nillable="false" minOccurs="0" maxOccurs="unbounded"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="NameableType" abstract="true">
+		<xs:sequence>
+			<xs:element name="Name" type="NameType" nillable="false"/>
+			<xs:element name="Description" type="xs:string" nillable="false"/>
+			<xs:element name="Uid" type="UuidType" nillable="false">
+				<xs:annotation>
+					<xs:documentation>Unique value throughout the Factory (use UUID format)</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Extensions" type="ExtensionArrayType" nillable="false" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Available for static supplier extensions</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="SoftwareModuleType" final="#all">
+		<xs:sequence>
+			<xs:element name="Name" type="xs:string"/>
+			<xs:element name="Supplier" type="xs:string"/>
+			<xs:element name="Description" type="xs:string"/>
+			<xs:element name="Version" type="xs:string"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="SoftwareModuleArrayType" final="#all">
+		<xs:sequence>
+			<xs:element name="SoftwareModule" type="SoftwareModuleType" nillable="false" minOccurs="0" maxOccurs="unbounded"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="EquipmentElementType" abstract="true">
+		<xs:complexContent>
+			<xs:extension base="NameableType">
+				<xs:sequence>
+					<xs:element name="ElementType" type="xs:string" nillable="false"/>
+					<xs:element name="Supplier" type="xs:string" nillable="false"/>
+					<xs:element name="Make" type="xs:string" nillable="false"/>
+					<xs:element name="Model" type="xs:string" nillable="false"/>
+					<xs:element name="ModelRevision" type="xs:string" nillable="false"/>
+					<xs:element name="Function" type="xs:string" nillable="false"/>
+					<xs:element name="ImmutableID" type="xs:string" nillable="false"/>
+					<xs:element name="SoftwareModules" type="SoftwareModuleArrayType" nillable="false"/>
+				</xs:sequence>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:complexType name="MaterialLocationType" final="#all">
+		<xs:complexContent>
+			<xs:extension base="NameableType">
+				<xs:sequence>
+					<xs:element name="MaterialType" type="MaterialTypeEnum" nillable="false"/>
+				</xs:sequence>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:complexType name="MaterialLocationArrayType" final="#all">
+		<xs:sequence>
+			<xs:element name="MaterialLocation" type="MaterialLocationType" nillable="false" minOccurs="0" maxOccurs="unbounded"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="AbstractModuleType" abstract="true">
+		<xs:complexContent>
+			<xs:extension base="EquipmentElementType">
+				<xs:sequence>
+					<xs:element name="ProcessType" type="ProcessTypeEnum" nillable="false"/>
+					<xs:element name="ProcessName" type="xs:string" nillable="false"/>
+					<xs:element name="RecipeType" type="xs:string" nillable="false"/>
+				</xs:sequence>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:complexType name="IODeviceType" final="#all">
+		<xs:complexContent>
+			<xs:extension base="EquipmentElementType"/>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:complexType name="IODeviceArrayType" final="#all">
+		<xs:sequence>
+			<xs:element name="IODevice" type="IODeviceType" nillable="false" minOccurs="0" maxOccurs="unbounded"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="IODeviceRefArrayType" final="#all">
+		<xs:sequence>
+			<xs:element name="IODeviceRef" type="e120:UuidType" nillable="false" minOccurs="0" maxOccurs="unbounded"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="SubsystemRefArrayType" final="#all">
+		<xs:sequence>
+			<xs:element name="SubsystemRef" type="e120:UuidType" nillable="false" minOccurs="0" maxOccurs="unbounded"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="SubsystemComponentsType" final="#all">
+		<xs:sequence>
+			<xs:element name="MaterialLocations" type="MaterialLocationArrayType" minOccurs="0"/>
+			<xs:element name="IODevices" type="IODeviceArrayType" minOccurs="0"/>
+			<xs:element name="IODeviceRefs" type="e120:IODeviceRefArrayType" minOccurs="0"/>
+			<xs:element name="Subsystems" type="SubsystemArrayType" minOccurs="0"/>
+			<xs:element name="SubsystemRefs" type="e120:SubsystemRefArrayType" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="SubsystemType" final="#all">
+		<xs:complexContent>
+			<xs:extension base="EquipmentElementType">
+				<xs:sequence>
+					<xs:element name="SubsystemComponents" type="SubsystemComponentsType" minOccurs="0">
+						<xs:unique name="UniqueSubsystemComponentNames">
+							<xs:selector xpath="IODevices/IODevice|Subsystems/Subsystem|MaterialLocations/MaterialLocation"/>
+							<xs:field xpath="Name"/>
+						</xs:unique>
+					</xs:element>
+				</xs:sequence>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:complexType name="SubsystemArrayType" final="#all">
+		<xs:sequence>
+			<xs:element name="Subsystem" type="SubsystemType" minOccurs="0" maxOccurs="unbounded"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="ModuleRefArrayType" final="#all">
+		<xs:sequence>
+			<xs:element name="ModuleRef" type="e120:UuidType" nillable="false" minOccurs="0" maxOccurs="unbounded"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="ModuleComponentsType" final="#all">
+		<xs:sequence>
+			<xs:element name="MaterialLocations" type="MaterialLocationArrayType" minOccurs="0"/>
+			<xs:element name="IODevices" type="IODeviceArrayType" minOccurs="0"/>
+			<xs:element name="IODeviceRefs" type="e120:IODeviceRefArrayType" minOccurs="0"/>
+			<xs:element name="Subsystems" type="SubsystemArrayType" minOccurs="0"/>
+			<xs:element name="SubsystemRefs" type="e120:SubsystemRefArrayType" minOccurs="0"/>
+			<xs:element name="Modules" type="ModuleArrayType" minOccurs="0"/>
+			<xs:element name="ModuleRefs" type="e120:ModuleRefArrayType" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="ModuleType" final="#all">
+		<xs:complexContent>
+			<xs:extension base="AbstractModuleType">
+				<xs:sequence>
+					<xs:element name="ModuleComponents" type="ModuleComponentsType" minOccurs="0">
+						<xs:unique name="UniqueModuleComponentNames">
+							<xs:selector xpath="IODevices/IODevice|Subsystems/Subsystem|MaterialLocations/MaterialLocation|Modules/Module"/>
+							<xs:field xpath="Name"/>
+						</xs:unique>
+					</xs:element>
+				</xs:sequence>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:complexType name="ModuleArrayType" final="#all">
+		<xs:sequence>
+			<xs:element name="Module" type="ModuleType" minOccurs="0" maxOccurs="unbounded"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="EquipmentComponentsType" final="#all">
+		<xs:sequence>
+			<xs:element name="MaterialLocations" type="MaterialLocationArrayType" minOccurs="0"/>
+			<xs:element name="IODevices" type="IODeviceArrayType" minOccurs="0"/>
+			<xs:element name="IODeviceRefs" type="e120:IODeviceRefArrayType" minOccurs="0"/>
+			<xs:element name="Subsystems" type="SubsystemArrayType" minOccurs="0"/>
+			<xs:element name="SubsystemRefs" type="e120:SubsystemRefArrayType" minOccurs="0"/>
+			<xs:element name="Modules" type="ModuleArrayType" minOccurs="0"/>
+			<xs:element name="ModuleRefs" type="e120:ModuleRefArrayType" minOccurs="0"/>
+			<xs:element name="Equipment" type="EquipmentArrayType" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="EquipmentType" final="#all">
+		<xs:complexContent>
+			<xs:extension base="AbstractModuleType">
+				<xs:sequence>
+					<xs:element name="EquipmentComponents" type="EquipmentComponentsType" minOccurs="0">
+						<xs:unique name="UniqueEquipmentComponentNames">
+							<xs:selector xpath="IODevices/IODevice|Subsystems/Subsystem|MaterialLocations/MaterialLocation|Modules/Module|Equipment/Equipment"/>
+							<xs:field xpath="Name"/>
+						</xs:unique>
+					</xs:element>
+				</xs:sequence>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:complexType name="EquipmentArrayType" final="#all">
+		<xs:sequence>
+			<xs:element name="Equipment" type="EquipmentType" minOccurs="0" maxOccurs="unbounded"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:element name="Equipment" type="EquipmentType">
+		<xs:key name="UniqueUidKey">
+			<xs:selector xpath=".//Uid"/>
+			<xs:field xpath="."/>
+		</xs:key>
+		<xs:key name="ModuleUidKey">
+			<xs:selector xpath=".//Module/Uid"/>
+			<xs:field xpath="."/>
+		</xs:key>
+		<xs:key name="SubsystemUidKey">
+			<xs:selector xpath=".//Subsystem/Uid"/>
+			<xs:field xpath="."/>
+		</xs:key>
+		<xs:key name="IODeviceUidKey">
+			<xs:selector xpath=".//IODevice/Uid"/>
+			<xs:field xpath="."/>
+		</xs:key>
+		<xs:keyref name="ModuleUidKeyref" refer="ModuleUidKey">
+			<xs:selector xpath=".//ModuleRef"/>
+			<xs:field xpath="."/>
+		</xs:keyref>
+		<xs:keyref name="SubsystemUidKeyref" refer="SubsystemUidKey">
+			<xs:selector xpath=".//SubsystemRef"/>
+			<xs:field xpath="."/>
+		</xs:keyref>
+		<xs:keyref name="IODeviceUidKeyref" refer="IODeviceUidKey">
+			<xs:selector xpath=".//IODeviceRef"/>
+			<xs:field xpath="."/>
+		</xs:keyref>
+		<xs:keyref name="ExtensionUidKeyref" refer="UniqueUidKey">
+			<xs:selector xpath=".//NameableRef"/>
+			<xs:field xpath="."/>
+		</xs:keyref>
+	</xs:element>
+</xs:schema>

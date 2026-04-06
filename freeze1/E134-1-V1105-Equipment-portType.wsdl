@@ -1,0 +1,134 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<wsdl:definitions name="EquipmentDataCollectionManagement" 
+	xmlns="urn:semi-org:ws.E134-1.V1105.DCMEqp-portType" 
+	xmlns:xsd="http://www.w3.org/2001/XMLSchema" 
+	xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" 
+	xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" 
+	xmlns:dcm="urn:semi-org:xsd.E134-1.V1105.DCM"
+	xmlns:auth="urn:semi-org:xsd.E132-1.V0305.auth"
+	targetNamespace="urn:semi-org:ws.E134-1.V1105.DCMEqp-portType">
+<!--
+
+NOTICE: SEMI makes no warranties or representations as to the suitability of the standards set forth herein for any particular application. The determination of the suitability of the standard is solely the responsibility of the user. Users are cautioned to refer to manufacturer's instructions, product labels, product data sheets, and other relevant literature, respecting any materials or equipment mentioned herein. These standards are subject to change without notice.
+
+By publication of this standard, Semiconductor Equipment and Materials International (SEMI) takes no position respecting the validity of any patent rights or copyrights asserted in connection with any items mentioned in this standard. Users of this standard are expressly advised that determination of any such patent rights or copyrights, and the risk of infringement of such rights are entirely their own responsibility.
+
+-->
+
+	<!-- I M P O R T S -->
+	<wsdl:types>
+		<xsd:schema>
+			<xsd:import namespace="urn:semi-org:xsd.E134-1.V1105.DCM" schemaLocation="E134-1-V1105-Schema.xsd" />
+			<xsd:import namespace="urn:semi-org:xsd.E132-1.V0305.auth" schemaLocation="E132-1-V0305-Schema.xsd" /> 
+		</xsd:schema>
+	</wsdl:types>
+
+    <!-- M E S S A G E   D E F I N I T I O N S -->
+	<wsdl:message name="DefinePlanIn">
+		<wsdl:part name="DefinePlan" element="dcm:DefinePlanRequest" />
+	</wsdl:message>
+	<wsdl:message name="DefinePlanOut">
+		<wsdl:part name="DefinePlanResponse" element="dcm:DefinePlanResponse" />
+	</wsdl:message>
+	<wsdl:message name="GetDefinedPlanIdsIn">
+		<wsdl:part name="GetDefinedPlanIds" element="dcm:GetDefinedPlanIdsRequest" />
+	</wsdl:message>
+	<wsdl:message name="GetDefinedPlanIdsOut">
+		<wsdl:part name="GetDefinedPlanIdsResponse" element="dcm:GetDefinedPlanIdsResponse" />
+	</wsdl:message>
+	<wsdl:message name="GetPlanDefinitionIn">
+		<wsdl:part name="GetPlanDefinition" element="dcm:GetPlanDefinitionRequest" />
+	</wsdl:message>
+	<wsdl:message name="GetPlanDefinitionOut">
+		<wsdl:part name="GetPlanDefinitionResponse" element="dcm:GetPlanDefinitionResponse" />
+	</wsdl:message>
+	<wsdl:message name="ActivatePlanIn">
+		<wsdl:part name="ActivatePlan" element="dcm:ActivatePlanRequest" />
+	</wsdl:message>
+	<wsdl:message name="ActivatePlanOut">
+		<wsdl:part name="ActivatePlanResponse" element="dcm:ActivatePlanResponse" />
+	</wsdl:message>
+	<wsdl:message name="GetActivePlanIdsIn">
+		<wsdl:part name="GetActivePlanIds" element="dcm:GetActivePlanIdsRequest" />
+	</wsdl:message>
+	<wsdl:message name="GetActivePlanIdsOut">
+		<wsdl:part name="GetActivePlanIdsResponse" element="dcm:GetActivePlanIdsResponse" />
+	</wsdl:message>
+	<wsdl:message name="DeactivatePlanIn">
+		<wsdl:part name="DeactivatePlan" element="dcm:DeactivatePlanRequest" />
+	</wsdl:message>
+	<wsdl:message name="DeactivatePlanOut">
+		<wsdl:part name="DeactivatePlanResponse" element="dcm:DeactivatePlanResponse" />
+	</wsdl:message>
+	<wsdl:message name="DeletePlanIn">
+		<wsdl:part name="DeletePlan" element="dcm:DeletePlanRequest" />
+	</wsdl:message>
+	<wsdl:message name="DeletePlanOut">
+		<wsdl:part name="DeletePlanResponse" element="dcm:DeletePlanResponse" />
+	</wsdl:message>
+	<wsdl:message name="GetParameterValuesIn">
+		<wsdl:part name="GetParameterValues" element="dcm:GetParameterValuesRequest" />
+	</wsdl:message>
+	<wsdl:message name="GetParameterValuesOut">
+		<wsdl:part name="GetParameterValuesResponse" element="dcm:GetParameterValuesResponse" />
+	</wsdl:message>
+	<wsdl:message name="GetObjTypeInstanceIdsIn">
+		<wsdl:part name="GetObjTypeInstanceIds" element="dcm:GetObjTypeInstanceIdsRequest" />
+	</wsdl:message>
+	<wsdl:message name="GetObjTypeInstanceIdsOut">
+		<wsdl:part name="GetObjTypeInstanceIdsResponse" element="dcm:GetObjTypeInstanceIdsResponse" />
+	</wsdl:message>
+	<wsdl:message name="GetCurrentPerformanceStatusIn">
+		<wsdl:part name="GetCurrentPerformanceStatus" element="dcm:GetCurrentPerformanceStatusRequest" />
+	</wsdl:message>
+	<wsdl:message name="GetCurrentPerformanceStatusOut">
+		<wsdl:part name="GetCurrentPerformanceStatusResponse" element="dcm:GetCurrentPerformanceStatusResponse" />
+	</wsdl:message>
+	<wsdl:message name="E132HeaderMessage">
+		<wsdl:part name="E132Header" element="auth:E132Header"/>
+	</wsdl:message>
+
+    <!-- P O R T   T Y P E   D E F I N I T I O N S -->
+	<wsdl:portType name="DataCollectionManagement">
+		<wsdl:operation name="DefinePlan">
+			<wsdl:input name="DefinePlanInput" message="DefinePlanIn" />
+			<wsdl:output name="DefinePlanOutput" message="DefinePlanOut" />
+		</wsdl:operation>
+		<wsdl:operation name="GetDefinedPlanIds">
+			<wsdl:input name="GetDefinedPlanIdsInput" message="GetDefinedPlanIdsIn" />
+			<wsdl:output name="GetDefinedPlanIdsOutput" message="GetDefinedPlanIdsOut" />
+		</wsdl:operation>
+		<wsdl:operation name="GetPlanDefinition">
+			<wsdl:input name="GetPlanDefinitionInput" message="GetPlanDefinitionIn" />
+			<wsdl:output name="GetPlanDefinitionOutput" message="GetPlanDefinitionOut" />
+		</wsdl:operation>
+		<wsdl:operation name="ActivatePlan">
+			<wsdl:input name="ActivatePlanInput" message="ActivatePlanIn" />
+			<wsdl:output name="ActivatePlanOutput" message="ActivatePlanOut" />
+		</wsdl:operation>
+		<wsdl:operation name="GetActivePlanIds">
+			<wsdl:input name="GetActivePlanIdsInput" message="GetActivePlanIdsIn" />
+			<wsdl:output name="GetActivePlanIdsOutput" message="GetActivePlanIdsOut" />
+		</wsdl:operation>
+		<wsdl:operation name="DeactivatePlan">
+			<wsdl:input name="DeactivatePlanInput" message="DeactivatePlanIn" />
+			<wsdl:output name="DeactivatePlanOutput" message="DeactivatePlanOut" />
+		</wsdl:operation>
+		<wsdl:operation name="DeletePlan">
+			<wsdl:input name="DeletePlanInput" message="DeletePlanIn" />
+			<wsdl:output name="DeletePlanOutput" message="DeletePlanOut" />
+		</wsdl:operation>
+		<wsdl:operation name="GetParameterValues">
+			<wsdl:input name="GetParameterValuesInput" message="GetParameterValuesIn" />
+			<wsdl:output name="GetParameterValuesOutput" message="GetParameterValuesOut" />
+		</wsdl:operation>
+		<wsdl:operation name="GetObjTypeInstanceIds">
+			<wsdl:input name="GetObjTypeInstanceIdsInput" message="GetObjTypeInstanceIdsIn" />
+			<wsdl:output name="GetObjTypeInstanceIdsOutput" message="GetObjTypeInstanceIdsOut" />
+		</wsdl:operation>
+		<wsdl:operation name="GetCurrentPerformanceStatus">
+			<wsdl:input name="GetCurrentPerformanceStatusInput" message="GetCurrentPerformanceStatusIn" />
+			<wsdl:output name="GetCurrentPerformanceStatusOutput" message="GetCurrentPerformanceStatusOut" />
+		</wsdl:operation>
+	</wsdl:portType>
+</wsdl:definitions>

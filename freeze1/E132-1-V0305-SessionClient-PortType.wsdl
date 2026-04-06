@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<wsdl:definitions name="SessionClient" 
+    xmlns="urn:semi-org:ws.E132-1.V0305.sessClient-portType" 
+	targetNamespace="urn:semi-org:ws.E132-1.V0305.sessClient-portType"
+	xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/"
+	xmlns:xsd="http://www.w3.org/2001/XMLSchema" 
+	xmlns:auth="urn:semi-org:xsd.E132-1.V0305.auth"
+	xmlns:SCPort="urn:semi-org:ws.E132-1.V0305.sessClient-portType">
+	
+    <wsdl:types>
+		<xsd:schema>
+			<xsd:import namespace="urn:semi-org:xsd.E132-1.V0305.auth" schemaLocation="E132-1-V0305-Schema.xsd"/> 
+		</xsd:schema>
+	</wsdl:types>
+
+	<wsdl:message name="E132HashHeaderMessage">
+		<wsdl:part name="E132HashHeader" element="auth:E132HashHeader"/>
+	</wsdl:message>
+	<wsdl:message name="SessionPingRequestMessage">
+		<wsdl:part name="SessionPingRequest" element="auth:SessionPingRequest"/>
+	</wsdl:message>
+	<wsdl:message name="SessionPingResponseMessage">
+		<wsdl:part name="SessionPingResponse" element="auth:SessionPingResponse"/>
+	</wsdl:message>
+	<wsdl:message name="SessionFrozenInMessage">
+		<wsdl:part name="SessionFrozen" element="auth:SessionFrozenNotification"/>
+	</wsdl:message>
+	<wsdl:message name="SessionClosedInMessage">
+		<wsdl:part name="SessionClosed" element="auth:SessionClosedNotification"/>
+	</wsdl:message>	
+	
+	<wsdl:portType name="SessionClient">
+		<wsdl:operation name="SessionPing">
+			<wsdl:input name="SessionPingRequestIn" message="SCPort:SessionPingRequestMessage"/>
+			<wsdl:output name="SessionPingResponseOut" message="SCPort:SessionPingResponseMessage"/>
+		</wsdl:operation>
+		<wsdl:operation name="SessionFrozen">
+			<wsdl:input name="SessionFrozenIn" message="SCPort:SessionFrozenInMessage"/>
+		</wsdl:operation>
+		<wsdl:operation name="SessionClosed">
+			<wsdl:input name="SessionClosedIn" message="SCPort:SessionClosedInMessage"/>
+		</wsdl:operation>
+	</wsdl:portType>
+	
+	
+</wsdl:definitions>

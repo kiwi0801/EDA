@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<wsdl:definitions name="ESDClient" targetNamespace="urn:semi-org:ws.E125-1.V0305.esdMetaClt-binding" xmlns="urn:semi-org:ws.E125-1.V0305.esdMetaClt-binding" xmlns:clmbind="urn:semi-org:ws.E125-1.V0305.esdMetaClt-binding" xmlns:clmport="urn:semi-org:ws.E125-1.V0305.esdMetaClt-portType" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">
+	<!--
+
+NOTICE: SEMI makes no warranties or representations as to the suitability of the standards set forth herein for any particular application. The determination of the suitability of the standard is solely the responsibility of the user. Users are cautioned to refer to manufacturer's instructions, product labels, product data sheets, and other relevant literature, respecting any materials or equipment mentioned herein. These standards are subject to change without notice.
+
+By publication of this standard, Semiconductor Equipment and Materials International (SEMI) takes no position respecting the validity of any patent rights or copyrights asserted in connection with any items mentioned in this standard. Users of this standard are expressly advised that determination of any such patent rights or copyrights, and the risk of infringement of such rights are entirely their own responsibility.
+
+-->
+	<!-- I M P O R T S -->
+	<wsdl:import location="E125-1-V0305-MetadataClient-PortType.wsdl" namespace="urn:semi-org:ws.E125-1.V0305.esdMetaClt-portType"/>
+	<!-- B I N D I N G   D E F I N I T I O N S -->
+	<wsdl:binding name="MetadataClientBinding" type="clmport:MetadataClient">
+		<soap:binding style="document" transport="http://schemas.xmlsoap.org/soap/http"/>
+		<wsdl:operation name="MetadataRevised">
+			<soap:operation soapAction="urn:semi-org:ws.E125-1.V0305.esdMetaClt-binding:MetadataRevised" style="document"/>
+			<wsdl:input name="MetadataRevisedIn">
+				<soap:header message="clmport:E132HashHeaderMessage" part="E132HashHeader" required="true" use="literal"/>
+				<soap:body use="literal"/>
+			</wsdl:input>
+		</wsdl:operation>
+	</wsdl:binding>
+</wsdl:definitions>

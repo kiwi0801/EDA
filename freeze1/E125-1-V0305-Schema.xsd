@@ -1,0 +1,587 @@
+<?xml version="1.0" encoding="utf-8"?>
+<xsd:schema targetNamespace="urn:semi-org:xsd.E125-1.V0305.esd" xmlns:ccs="urn:semi-org:xsd.CommonComponents.V0305.ccs" xmlns:cem="urn:semi-org:xsd.E120-1.V1104.CommonEquipmentModel" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:esd="urn:semi-org:xsd.E125-1.V0305.esd" xmlns="urn:semi-org:xsd.E125-1.V0305.esd" elementFormDefault="qualified" id="metadata">
+	<!--
+
+NOTICE: SEMI makes no warranties or representations as to the suitability of the standards set forth herein for any particular application. The determination of the suitability of the standard is solely the responsibility of the user. Users are cautioned to refer to manufacturer's instructions, product labels, product data sheets, and other relevant literature, respecting any materials or equipment mentioned herein. These standards are subject to change without notice.
+
+By publication of this standard, Semiconductor Equipment and Materials International (SEMI) takes no position respecting the validity of any patent rights or copyrights asserted in connection with any items mentioned in this standard. Users of this standard are expressly advised that determination of any such patent rights or copyrights, and the risk of infringement of such rights are entirely their own responsibility.
+
+-->
+	<!-- I M P O R T S -->
+	<xsd:import namespace="urn:semi-org:xsd.E120-1.V1104.CommonEquipmentModel" schemaLocation="E120-1.V1104.CommonEquipmentModel.xsd"/>
+	<xsd:import namespace="urn:semi-org:xsd.CommonComponents.V0305.ccs" schemaLocation="CommonComponents-V0305-Schema.xsd"/>
+	<!-- T Y P E   D E F I N I T I O N S -->
+	<xsd:simpleType name="LanguageCodeType" final="#all">
+		<xsd:restriction base="xsd:string">
+			<xsd:pattern value="([a-z]|[A-Z]){2}|([a-z]|[A-Z]){2}\-([a-z]|[A-Z]){2}"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:simpleType name="SEMIStandardVersionType" final="#all">
+		<xsd:restriction base="xsd:string">
+			<xsd:pattern value="[A-Z][0-9]*\-[0-9]*"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:complexType name="UnitType" final="#all">
+		<xsd:sequence>
+			<xsd:element name="Description" type="xsd:string" block="#all" nillable="false"/>
+		</xsd:sequence>
+		<xsd:attribute name="id" type="xsd:string" use="required"/>
+		<xsd:attribute name="name" type="xsd:string" use="required"/>
+		<xsd:attribute name="symbol" type="xsd:string" use="required"/>
+	</xsd:complexType>
+	<xsd:complexType name="UnitRefType" final="#all">
+		<xsd:attribute name="unitId" type="xsd:string" use="required"/>
+	</xsd:complexType>
+	<xsd:complexType name="UnitConfigType" final="#all">
+		<xsd:attribute name="unitId" type="xsd:string" use="required"/>
+		<xsd:attribute name="setting" type="xsd:string" use="required"/>
+	</xsd:complexType>
+	<xsd:complexType name="UnitConfigArrayType">
+		<xsd:sequence>
+			<xsd:element name="UnitConfig" type="UnitConfigType" nillable="false" maxOccurs="unbounded"/>
+		</xsd:sequence>
+		<xsd:attribute name="configParamSource" type="cem:LocatorType" use="required"/>
+		<xsd:attribute name="configParamName" type="xsd:string" use="required"/>
+	</xsd:complexType>
+	<xsd:complexType name="StringTypeType" final="#all">
+		<xsd:attribute name="language" type="LanguageCodeType" use="required"/>
+		<xsd:attribute name="maxCharacters" type="xsd:int" use="required"/>
+	</xsd:complexType>
+	<xsd:complexType name="ByteTypeType" final="#all">
+		<xsd:choice>
+			<xsd:element name="Units" type="UnitRefType" nillable="false"/>
+			<xsd:element name="AvailableUnits" type="UnitConfigArrayType" nillable="false"/>
+		</xsd:choice>
+	</xsd:complexType>
+	<xsd:complexType name="ShortTypeType" final="#all">
+		<xsd:choice>
+			<xsd:element name="Units" type="UnitRefType" nillable="false"/>
+			<xsd:element name="AvailableUnits" type="UnitConfigArrayType" nillable="false"/>
+		</xsd:choice>
+	</xsd:complexType>
+	<xsd:complexType name="IntTypeType" final="#all">
+		<xsd:choice>
+			<xsd:element name="Units" type="UnitRefType" nillable="false"/>
+			<xsd:element name="AvailableUnits" type="UnitConfigArrayType" nillable="false"/>
+		</xsd:choice>
+	</xsd:complexType>
+	<xsd:complexType name="LongTypeType" final="#all">
+		<xsd:choice>
+			<xsd:element name="Units" type="UnitRefType" nillable="false"/>
+			<xsd:element name="AvailableUnits" type="UnitConfigArrayType" nillable="false"/>
+		</xsd:choice>
+	</xsd:complexType>
+	<xsd:complexType name="FloatTypeType" final="#all">
+		<xsd:choice>
+			<xsd:element name="Units" type="UnitRefType" nillable="false"/>
+			<xsd:element name="AvailableUnits" type="UnitConfigArrayType" nillable="false"/>
+		</xsd:choice>
+		<xsd:attribute name="digitsOfPrecision" type="xsd:int" use="required"/>
+	</xsd:complexType>
+	<xsd:complexType name="DoubleTypeType" final="#all">
+		<xsd:choice>
+			<xsd:element name="Units" type="UnitRefType" nillable="false"/>
+			<xsd:element name="AvailableUnits" type="UnitConfigArrayType" nillable="false"/>
+		</xsd:choice>
+		<xsd:attribute name="digitsOfPrecision" type="xsd:int" use="required"/>
+	</xsd:complexType>
+	<xsd:complexType name="BooleanTypeType" final="#all">
+		<xsd:sequence/>
+	</xsd:complexType>
+	<xsd:complexType name="Base64BinaryTypeType" final="#all">
+		<xsd:sequence/>
+		<xsd:attribute name="mimeTypeName" type="xsd:string" use="required"/>
+	</xsd:complexType>
+	<xsd:complexType name="AnyURITypeType" final="#all">
+		<xsd:sequence/>
+	</xsd:complexType>
+	<xsd:complexType name="DateTimeTypeType" final="#all">
+		<xsd:sequence/>
+	</xsd:complexType>
+	<xsd:complexType name="EnumeratedIntegerType" final="#all">
+		<xsd:sequence>
+			<xsd:element name="Description" type="xsd:string" block="#all" nillable="false"/>
+		</xsd:sequence>
+		<xsd:attribute name="value" type="xsd:int" use="required"/>
+	</xsd:complexType>
+	<xsd:complexType name="EnumeratedStringType" final="#all">
+		<xsd:sequence>
+			<xsd:element name="Description" type="xsd:string" block="#all" nillable="false"/>
+		</xsd:sequence>
+		<xsd:attribute name="value" type="xsd:string" use="required"/>
+	</xsd:complexType>
+	<xsd:complexType name="TypeHintType" final="#all">
+		<xsd:attribute name="typeName" type="xsd:string" use="required"/>
+	</xsd:complexType>
+	<xsd:complexType name="VariableTypeType" final="#all">
+		<xsd:sequence>
+			<xsd:element name="TypeHint" type="TypeHintType" nillable="false" maxOccurs="unbounded"/>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:complexType name="EnumerationTypeType" final="#all">
+		<xsd:sequence>
+			<xsd:element name="Description" type="xsd:string" block="#all" nillable="false"/>
+			<xsd:choice>
+				<xsd:element name="EnumeratedInteger" type="EnumeratedIntegerType" nillable="false" maxOccurs="unbounded"/>
+				<xsd:element name="EnumeratedString" type="EnumeratedStringType" nillable="false" maxOccurs="unbounded"/>
+			</xsd:choice>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:complexType name="ArrayTypeType" final="#all">
+		<xsd:sequence>
+			<xsd:element name="ElementDescription" type="xsd:string" block="#all" nillable="false"/>
+			<xsd:choice>
+				<xsd:element name="StructureType" type="StructureTypeType" nillable="false"/>
+				<xsd:element name="EnumeratedType" type="EnumerationTypeType" nillable="false"/>
+				<xsd:element name="ArrayType" type="ArrayTypeType" nillable="false"/>
+				<xsd:element name="StringType" type="StringTypeType" nillable="false"/>
+				<xsd:element name="DateTimeType" type="DateTimeTypeType" nillable="false"/>
+				<xsd:element name="AnyURIType" type="AnyURITypeType" nillable="false"/>
+				<xsd:element name="BooleanType" type="BooleanTypeType" nillable="false"/>
+				<xsd:element name="Base64BinaryType" type="Base64BinaryTypeType" nillable="false"/>
+				<xsd:element name="ByteType" type="ByteTypeType" nillable="false"/>
+				<xsd:element name="ShortType" type="ShortTypeType" nillable="false"/>
+				<xsd:element name="IntType" type="IntTypeType" nillable="false"/>
+				<xsd:element name="LongType" type="LongTypeType" nillable="false"/>
+				<xsd:element name="FloatType" type="FloatTypeType" nillable="false"/>
+				<xsd:element name="DoubleType" type="DoubleTypeType" nillable="false"/>
+				<xsd:element name="VariableType" type="VariableTypeType" nillable="false"/>
+				<xsd:element name="ParameterTypeDefinitionRef" type="ParameterTypeDefinitionReferenceType" nillable="false"/>
+			</xsd:choice>
+		</xsd:sequence>
+		<xsd:attribute name="minElements" type="xsd:int" use="required"/>
+		<xsd:attribute name="maxElements" type="xsd:int" use="required"/>
+	</xsd:complexType>
+	<xsd:complexType name="FieldType" final="#all">
+		<xsd:sequence>
+			<xsd:element name="Description" type="xsd:string" block="#all" nillable="false"/>
+			<xsd:choice>
+				<xsd:element name="StructureType" type="StructureTypeType" nillable="false"/>
+				<xsd:element name="EnumeratedType" type="EnumerationTypeType" nillable="false"/>
+				<xsd:element name="ArrayType" type="ArrayTypeType" nillable="false"/>
+				<xsd:element name="StringType" type="StringTypeType" nillable="false"/>
+				<xsd:element name="DateTimeType" type="DateTimeTypeType" nillable="false"/>
+				<xsd:element name="AnyURIType" type="AnyURITypeType" nillable="false"/>
+				<xsd:element name="BooleanType" type="BooleanTypeType" nillable="false"/>
+				<xsd:element name="Base64BinaryType" type="Base64BinaryTypeType" nillable="false"/>
+				<xsd:element name="ByteType" type="ByteTypeType" nillable="false"/>
+				<xsd:element name="ShortType" type="ShortTypeType" nillable="false"/>
+				<xsd:element name="IntType" type="IntTypeType" nillable="false"/>
+				<xsd:element name="LongType" type="LongTypeType" nillable="false"/>
+				<xsd:element name="FloatType" type="FloatTypeType" nillable="false"/>
+				<xsd:element name="DoubleType" type="DoubleTypeType" nillable="false"/>
+				<xsd:element name="VariableType" type="VariableTypeType" nillable="false"/>
+				<xsd:element name="TypeDefinitionRef" type="ParameterTypeDefinitionReferenceType" nillable="false"/>
+			</xsd:choice>
+		</xsd:sequence>
+		<xsd:attribute name="name" type="xsd:string" use="required"/>
+		<xsd:attribute name="canBeNull" type="xsd:boolean" use="required"/>
+	</xsd:complexType>
+	<xsd:complexType name="StructureTypeType" final="#all">
+		<xsd:sequence>
+			<xsd:element name="Description" type="xsd:string" block="#all" nillable="false"/>
+			<xsd:element name="Field" type="FieldType" nillable="false" maxOccurs="unbounded"/>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:complexType name="ParameterTypeDefinitionType" final="#all">
+		<xsd:sequence>
+			<xsd:element name="Description" type="xsd:string" block="#all" nillable="false"/>
+			<xsd:choice>
+				<xsd:element name="StructureType" type="StructureTypeType" nillable="false"/>
+				<xsd:element name="EnumeratedType" type="EnumerationTypeType" nillable="false"/>
+				<xsd:element name="ArrayType" type="ArrayTypeType" nillable="false"/>
+				<xsd:element name="StringType" type="StringTypeType" nillable="false"/>
+				<xsd:element name="DateTimeType" type="DateTimeTypeType" nillable="false"/>
+				<xsd:element name="AnyURIType" type="AnyURITypeType" nillable="false"/>
+				<xsd:element name="BooleanType" type="BooleanTypeType" nillable="false"/>
+				<xsd:element name="Base64BinaryType" type="Base64BinaryTypeType" nillable="false"/>
+				<xsd:element name="ByteType" type="ByteTypeType" nillable="false"/>
+				<xsd:element name="ShortType" type="ShortTypeType" nillable="false"/>
+				<xsd:element name="IntType" type="IntTypeType" nillable="false"/>
+				<xsd:element name="LongType" type="LongTypeType" nillable="false"/>
+				<xsd:element name="FloatType" type="FloatTypeType" nillable="false"/>
+				<xsd:element name="DoubleType" type="DoubleTypeType" nillable="false"/>
+				<xsd:element name="VariableType" type="VariableTypeType" nillable="false"/>
+			</xsd:choice>
+		</xsd:sequence>
+		<xsd:attribute name="name" type="xsd:string" use="required"/>
+	</xsd:complexType>
+	<xsd:complexType name="ParameterTypeDefinitionReferenceType" final="#all">
+		<xsd:attribute name="typeName" type="xsd:string" use="required"/>
+	</xsd:complexType>
+	<xsd:complexType name="ParameterReferenceType" final="#all">
+		<xsd:attribute name="source" type="cem:LocatorType" use="optional"/>
+		<xsd:attribute name="name" type="xsd:string" use="required"/>
+	</xsd:complexType>
+	<xsd:complexType name="ParameterAssociationType" final="#all">
+		<xsd:sequence>
+			<xsd:element name="ParameterRef" type="ParameterReferenceType" nillable="false"/>
+			<xsd:element name="Description" type="xsd:string" block="#all" nillable="false"/>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:complexType name="EventToParameterMapType" final="#all">
+		<xsd:sequence>
+			<xsd:element name="Description" type="xsd:string" nillable="false" minOccurs="0"/>
+			<xsd:element name="AvailableParameter" type="ParameterReferenceType" nillable="false" minOccurs="0" maxOccurs="unbounded"/>
+		</xsd:sequence>
+		<xsd:attribute name="eventId" type="xsd:string" use="required"/>
+	</xsd:complexType>
+	<xsd:complexType name="StateMachineInstanceType" final="#all">
+		<xsd:sequence>
+			<xsd:element name="CurrentStateName" type="ParameterReferenceType" nillable="false" minOccurs="0"/>
+			<xsd:element name="PreviousStateName" type="ParameterReferenceType" nillable="false" minOccurs="0"/>
+			<xsd:element name="EventMap" type="EventToParameterMapType" nillable="false" minOccurs="0" maxOccurs="unbounded"/>
+			<xsd:element name="NestedStateMachine" type="StateMachineInstanceType" nillable="false" minOccurs="0" maxOccurs="unbounded"/>
+		</xsd:sequence>
+		<xsd:attribute name="stateMachineId" type="xsd:string" use="required"/>
+	</xsd:complexType>
+	<xsd:complexType name="ConstraintType" final="#all">
+		<xsd:sequence>
+			<xsd:element name="Description" type="xsd:string" block="#all" nillable="false"/>
+			<xsd:element name="Definition" type="xsd:string" block="#all" nillable="false"/>
+		</xsd:sequence>
+		<xsd:attribute name="name" type="xsd:string" use="required"/>
+	</xsd:complexType>
+	<xsd:complexType name="ParameterClassificationType" abstract="true">
+		<xsd:sequence/>
+		<xsd:attribute name="isTransient" type="xsd:boolean" use="required"/>
+	</xsd:complexType>
+	<xsd:complexType name="ReadOnlyType">
+		<xsd:complexContent>
+			<xsd:extension base="ParameterClassificationType">
+				<xsd:sequence/>
+			</xsd:extension>
+		</xsd:complexContent>
+	</xsd:complexType>
+	<xsd:complexType name="DataType" final="#all">
+		<xsd:complexContent>
+			<xsd:extension base="ReadOnlyType">
+				<xsd:sequence/>
+			</xsd:extension>
+		</xsd:complexContent>
+	</xsd:complexType>
+	<xsd:complexType name="ReadWriteType" abstract="true">
+		<xsd:complexContent>
+			<xsd:extension base="ParameterClassificationType">
+				<xsd:sequence>
+					<xsd:element name="AffectedParameter" type="ParameterAssociationType" nillable="false" minOccurs="0" maxOccurs="unbounded"/>
+				</xsd:sequence>
+			</xsd:extension>
+		</xsd:complexContent>
+	</xsd:complexType>
+	<xsd:complexType name="ControlType">
+		<xsd:complexContent>
+			<xsd:extension base="ReadWriteType">
+				<xsd:sequence/>
+			</xsd:extension>
+		</xsd:complexContent>
+	</xsd:complexType>
+	<xsd:complexType name="ConfigurationType">
+		<xsd:complexContent>
+			<xsd:extension base="ReadWriteType">
+				<xsd:sequence/>
+			</xsd:extension>
+		</xsd:complexContent>
+	</xsd:complexType>
+	<xsd:complexType name="ParameterType" final="#all">
+		<xsd:sequence>
+			<xsd:choice>
+				<xsd:element name="Control" type="ControlType" nillable="false"/>
+				<xsd:element name="Configuration" type="ConfigurationType" nillable="false"/>
+				<xsd:element name="Data" type="DataType" nillable="false"/>
+			</xsd:choice>
+			<xsd:element name="Description" type="xsd:string" block="#all" nillable="false"/>
+			<xsd:element name="TypeDefinitionRef" type="ParameterTypeDefinitionReferenceType" nillable="false"/>
+			<xsd:element name="AssociatedParameter" type="ParameterAssociationType" nillable="false" minOccurs="0" maxOccurs="unbounded"/>
+			<xsd:element name="Constraint" type="ConstraintType" nillable="false" minOccurs="0" maxOccurs="unbounded"/>
+		</xsd:sequence>
+		<xsd:attribute name="name" type="xsd:string" use="required"/>
+	</xsd:complexType>
+	<xsd:attributeGroup name="StateMachineAttributeGroup">
+		<xsd:attribute name="id" type="xsd:string" use="required"/>
+		<xsd:attribute name="name" type="xsd:string" use="required"/>
+	</xsd:attributeGroup>
+	<xsd:complexType name="TransitionType" final="#all">
+		<xsd:sequence>
+			<xsd:element name="Description" type="xsd:string" block="#all" nillable="false"/>
+		</xsd:sequence>
+		<xsd:attributeGroup ref="StateMachineAttributeGroup"/>
+		<xsd:attribute name="sourceStateId" type="xsd:string" use="required"/>
+		<xsd:attribute name="targetStateId" type="xsd:string" use="required"/>
+	</xsd:complexType>
+	<xsd:complexType name="TransitionReferenceType" final="#all">
+		<xsd:attribute name="transitionId" type="xsd:string" use="required"/>
+	</xsd:complexType>
+	<xsd:complexType name="EventType" final="#all">
+		<xsd:sequence>
+			<xsd:element name="Description" type="xsd:string" block="#all" nillable="false"/>
+			<xsd:element name="TransitionRef" type="TransitionReferenceType" nillable="false" maxOccurs="unbounded"/>
+		</xsd:sequence>
+		<xsd:attributeGroup ref="StateMachineAttributeGroup"/>
+	</xsd:complexType>
+	<xsd:complexType name="StateType" final="#all">
+		<xsd:sequence>
+			<xsd:element name="Description" type="xsd:string" block="#all" nillable="false"/>
+			<xsd:choice>
+				<xsd:element name="State" type="StateType" nillable="false" minOccurs="0" maxOccurs="unbounded"/>
+				<xsd:element name="StateMachine" type="StateMachineType" nillable="false" minOccurs="0" maxOccurs="unbounded"/>
+			</xsd:choice>
+		</xsd:sequence>
+		<xsd:attributeGroup ref="StateMachineAttributeGroup"/>
+	</xsd:complexType>
+	<xsd:complexType name="StateMachineType" final="#all">
+		<xsd:sequence>
+			<xsd:element name="Description" type="xsd:string" block="#all" nillable="false"/>
+			<xsd:element name="State" type="StateType" nillable="false" maxOccurs="unbounded"/>
+			<xsd:element name="Transition" type="TransitionType" nillable="false" maxOccurs="unbounded"/>
+			<xsd:element name="Event" type="EventType" nillable="false" minOccurs="0" maxOccurs="unbounded"/>
+		</xsd:sequence>
+		<xsd:attributeGroup ref="StateMachineAttributeGroup"/>
+	</xsd:complexType>
+	<xsd:complexType name="ParameterCollectionType" final="#all">
+		<xsd:sequence>
+			<xsd:element name="Parameter" type="ParameterType" nillable="false" maxOccurs="unbounded"/>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:complexType name="SEMIObjTypeType" final="#all">
+		<xsd:sequence>
+			<xsd:element name="Attributes" type="ParameterCollectionType" nillable="false"/>
+			<xsd:element name="EventData" type="ParameterCollectionType" nillable="false" minOccurs="0"/>
+			<xsd:element name="StateMachineInstance" type="StateMachineInstanceType" nillable="false" minOccurs="0">
+				<xsd:key name="UniqueObjTypeEventsKey">
+					<xsd:selector xpath=".//EventMap"/>
+					<xsd:field xpath="@eventId"/>
+				</xsd:key>
+			</xsd:element>
+		</xsd:sequence>
+		<xsd:attribute name="standardVersion" type="SEMIStandardVersionType" use="required"/>
+		<xsd:attribute name="objType" type="xsd:string" use="required"/>
+	</xsd:complexType>
+	<xsd:complexType name="SEMIObjTypeReferenceType" final="#all">
+		<xsd:attribute name="standardVersion" type="SEMIStandardVersionType" use="optional"/>
+		<xsd:attribute name="objType" type="xsd:string" use="required"/>
+	</xsd:complexType>
+	<xsd:complexType name="ExceptionType" final="#all">
+		<xsd:sequence>
+			<xsd:element name="Description" type="xsd:string" nillable="false"/>
+			<xsd:element name="SetData" type="ParameterType" nillable="false" minOccurs="0" maxOccurs="unbounded"/>
+			<xsd:element name="ClearData" type="ParameterType" nillable="false" minOccurs="0" maxOccurs="unbounded"/>
+		</xsd:sequence>
+		<xsd:attribute name="severity" type="xsd:string" use="required"/>
+		<xsd:attribute name="id" type="xsd:string" use="required"/>
+	</xsd:complexType>
+	<xsd:complexType name="ExceptionReferenceType" final="#all">
+		<xsd:attribute name="exceptionId" type="xsd:string"/>
+	</xsd:complexType>
+	<xsd:complexType name="EquipmentNodeDescriptionType" final="#all">
+		<xsd:sequence>
+			<xsd:element name="EquipmentNodeId" type="cem:LocatorType" block="#all" nillable="false"/>
+			<xsd:element name="StateMachineInstance" type="StateMachineInstanceType" nillable="false" minOccurs="0" maxOccurs="unbounded"/>
+			<xsd:element name="ObjTypeRef" type="SEMIObjTypeReferenceType" nillable="false" minOccurs="0" maxOccurs="unbounded"/>
+			<xsd:element name="ExceptionRef" type="ExceptionReferenceType" nillable="false" minOccurs="0" maxOccurs="unbounded"/>
+			<xsd:element name="Parameter" type="ParameterType" nillable="false" minOccurs="0" maxOccurs="unbounded"/>
+		</xsd:sequence>
+	</xsd:complexType>
+	<!-- M E S S A G E    C O N T A I N E R    D E F I N I T I O N S -->
+	<xsd:complexType name="GetUnitsRequestType" final="#all">
+		<xsd:sequence/>
+	</xsd:complexType>
+	<xsd:complexType name="GetUnitsResponseType" final="#all">
+		<xsd:choice>
+			<xsd:element name="Unit" type="UnitType" nillable="false" minOccurs="0" maxOccurs="unbounded"/>
+			<xsd:element ref="ccs:Error"/>
+		</xsd:choice>
+	</xsd:complexType>
+	<xsd:complexType name="GetTypeDefinitionsRequestType" final="#all">
+		<xsd:sequence/>
+	</xsd:complexType>
+	<xsd:complexType name="GetTypeDefinitionsResponseType" final="#all">
+		<xsd:choice>
+			<xsd:element name="TypeDefinition" type="ParameterTypeDefinitionType" nillable="false" minOccurs="0" maxOccurs="unbounded"/>
+			<xsd:element ref="ccs:Error"/>
+		</xsd:choice>
+	</xsd:complexType>
+	<xsd:complexType name="GetStateMachinesRequestType" final="#all">
+		<xsd:sequence/>
+	</xsd:complexType>
+	<xsd:complexType name="GetStateMachinesResponseType" final="#all">
+		<xsd:choice>
+			<xsd:element name="StateMachine" type="StateMachineType" nillable="false" minOccurs="0" maxOccurs="unbounded">
+				<xsd:key name="StateIdKey">
+					<xsd:selector xpath=".//State"/>
+					<xsd:field xpath="@id"/>
+				</xsd:key>
+				<xsd:key name="TransitionIdKey">
+					<xsd:selector xpath=".//Transition"/>
+					<xsd:field xpath="@id"/>
+				</xsd:key>
+				<xsd:keyref name="SourceStateIdRef" refer="StateIdKey">
+					<xsd:selector xpath=".//Transition"/>
+					<xsd:field xpath="@sourceStateId"/>
+				</xsd:keyref>
+				<xsd:keyref name="TargetStateIdRef" refer="StateIdKey">
+					<xsd:selector xpath=".//Transition"/>
+					<xsd:field xpath="@targetStateId"/>
+				</xsd:keyref>
+				<xsd:keyref name="TransitionIdRef" refer="TransitionIdKey">
+					<xsd:selector xpath=".//TransitionRef"/>
+					<xsd:field xpath="@transitionId"/>
+				</xsd:keyref>
+			</xsd:element>
+			<xsd:element ref="ccs:Error"/>
+		</xsd:choice>
+	</xsd:complexType>
+	<xsd:complexType name="GetSEMIObjTypesRequestType" final="#all">
+		<xsd:sequence/>
+	</xsd:complexType>
+	<xsd:complexType name="GetSEMIObjTypesResponseType" final="#all">
+		<xsd:choice>
+			<xsd:element name="ObjType" type="SEMIObjTypeType" nillable="false" minOccurs="0" maxOccurs="unbounded">
+				<xsd:key name="UniqueObjTypeParameterKey">
+					<xsd:selector xpath=".//Parameter"/>
+					<xsd:field xpath="@name"/>
+				</xsd:key>
+			</xsd:element>
+			<xsd:element ref="ccs:Error"/>
+		</xsd:choice>
+	</xsd:complexType>
+	<xsd:complexType name="GetExceptionsRequestType" final="#all">
+		<xsd:sequence/>
+	</xsd:complexType>
+	<xsd:complexType name="GetExceptionsResponseType" final="#all">
+		<xsd:choice>
+			<xsd:element name="Exception" type="ExceptionType" nillable="false" minOccurs="0" maxOccurs="unbounded"/>
+			<xsd:element ref="ccs:Error"/>
+		</xsd:choice>
+	</xsd:complexType>
+	<xsd:complexType name="GetEquipmentStructureRequestType" final="#all">
+		<xsd:sequence/>
+	</xsd:complexType>
+	<xsd:complexType name="GetEquipmentStructureResponseType" final="#all">
+		<xsd:choice>
+			<xsd:element ref="cem:Equipment" minOccurs="0"/>
+			<xsd:element ref="ccs:Error"/>
+		</xsd:choice>
+	</xsd:complexType>
+	<xsd:complexType name="GetEquipmentNodeDescriptionsRequestType" final="#all">
+		<xsd:sequence>
+			<xsd:element name="EquipmentNodeId" type="cem:LocatorType" nillable="false" minOccurs="0" maxOccurs="unbounded"/>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:complexType name="NodeDescriptionRequestErrorType" final="#all">
+		<xsd:sequence>
+			<xsd:element ref="ccs:Error"/>
+			<xsd:element name="InvalidEquipmentNodeId" type="cem:LocatorType" nillable="false" minOccurs="0" maxOccurs="unbounded"/>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:complexType name="NodeDescriptionResultType" final="#all">
+		<xsd:sequence>
+			<xsd:element name="NodeDescription" type="EquipmentNodeDescriptionType" nillable="false" minOccurs="0" maxOccurs="unbounded">
+				<xsd:key name="UniqueStateMachineIdKey">
+					<xsd:selector xpath=".//StateMachineInstance"/>
+					<xsd:field xpath="@id"/>
+				</xsd:key>
+				<xsd:key name="UniqueParameterNameKey">
+					<xsd:selector xpath=".//Parameter"/>
+					<xsd:field xpath="@name"/>
+				</xsd:key>
+				<xsd:key name="UniqueExceptionIdKey">
+					<xsd:selector xpath=".//ExceptionRef"/>
+					<xsd:field xpath="@id"/>
+				</xsd:key>
+				<xsd:key name="UniqueSEMIObjTypeKey">
+					<xsd:selector xpath=".//ObjTypeRef"/>
+					<xsd:field xpath="@standardVersion"/>
+					<xsd:field xpath="@objType"/>
+				</xsd:key>
+			</xsd:element>
+			<xsd:element name="InvalidEquipmentNodeId" type="cem:LocatorType" nillable="false" minOccurs="0" maxOccurs="unbounded"/>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:complexType name="GetEquipmentNodeDescriptionsResponseType" final="#all">
+		<xsd:choice>
+			<xsd:element name="NodeDescriptionResults" type="NodeDescriptionResultType" nillable="false"/>
+			<xsd:element ref="ccs:Error"/>
+		</xsd:choice>
+	</xsd:complexType>
+	<xsd:complexType name="GetLatestRevisionRequestType" final="#all">
+		<xsd:sequence/>
+	</xsd:complexType>
+	<xsd:complexType name="GetLatestRevisionResponseType" final="#all">
+		<xsd:choice>
+			<xsd:element name="Revision" type="xsd:dateTime" nillable="false"/>
+			<xsd:element ref="ccs:Error"/>
+		</xsd:choice>
+	</xsd:complexType>
+	<xsd:complexType name="NotifyOnRevisionsRequestType" final="#all">
+		<xsd:attribute name="enable" type="xsd:boolean" use="required"/>
+	</xsd:complexType>
+	<xsd:complexType name="NotifyOnRevisionsResponseType" final="#all">
+		<xsd:sequence>
+			<xsd:element ref="ccs:Error" minOccurs="0"/>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:complexType name="MetadataRevisedNotificationType" final="#all">
+		<xsd:sequence>
+			<xsd:element name="Revision" type="xsd:dateTime" nillable="false"/>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:element name="GetUnitsRequest" type="GetUnitsRequestType" block="#all" nillable="false"/>
+	<xsd:element name="GetUnitsResponse" type="GetUnitsResponseType" block="#all" nillable="false">
+		<xsd:key name="UnitIdKey">
+			<xsd:selector xpath=".//Unit"/>
+			<xsd:field xpath="@id"/>
+		</xsd:key>
+	</xsd:element>
+	<xsd:element name="GetTypeDefinitionsRequest" type="GetTypeDefinitionsRequestType" block="#all" nillable="false"/>
+	<xsd:element name="GetTypeDefinitionsResponse" type="GetTypeDefinitionsResponseType" block="#all" nillable="false">
+		<xsd:key name="TypeDefinitionNameKey">
+			<xsd:selector xpath=".//TypeDefinition"/>
+			<xsd:field xpath="@name"/>
+		</xsd:key>
+		<xsd:keyref name="TypeDefinitionRef" refer="TypeDefinitionNameKey">
+			<xsd:selector xpath=".//TypeDefinitionRef"/>
+			<xsd:field xpath="@typeName"/>
+		</xsd:keyref>
+	</xsd:element>
+	<xsd:element name="GetStateMachinesRequest" type="GetStateMachinesRequestType" block="#all" nillable="false"/>
+	<xsd:element name="GetStateMachinesResponse" type="GetStateMachinesResponseType" block="#all" nillable="false">
+		<xsd:key name="StateMachineIdKey">
+			<xsd:selector xpath=".//StateMachine"/>
+			<xsd:field xpath="@id"/>
+		</xsd:key>
+		<xsd:key name="EventIdKey">
+			<xsd:selector xpath=".//Event"/>
+			<xsd:field xpath="@id"/>
+		</xsd:key>
+	</xsd:element>
+	<xsd:element name="GetSEMIObjTypesRequest" type="GetSEMIObjTypesRequestType" block="#all" nillable="false"/>
+	<xsd:element name="GetSEMIObjTypesResponse" type="GetSEMIObjTypesResponseType" block="#all" nillable="false">
+		<xsd:key name="SEMIObjTypeKey">
+			<xsd:selector xpath=".//ObjType"/>
+			<xsd:field xpath="@standardVersion"/>
+			<xsd:field xpath="@objType"/>
+		</xsd:key>
+	</xsd:element>
+	<xsd:element name="GetExceptionsRequest" type="GetExceptionsRequestType" block="#all" nillable="false"/>
+	<xsd:element name="GetExceptionsResponse" type="GetExceptionsResponseType" block="#all" nillable="false">
+		<xsd:key name="ExceptionIdKey">
+			<xsd:selector xpath=".//Exception"/>
+			<xsd:field xpath="@id"/>
+		</xsd:key>
+	</xsd:element>
+	<xsd:element name="GetEquipmentStructureRequest" type="GetEquipmentStructureRequestType" block="#all" nillable="false"/>
+	<xsd:element name="GetEquipmentStructureResponse" type="GetEquipmentStructureResponseType" block="#all" nillable="false"/>
+	<xsd:element name="GetEquipmentNodeDescriptionsRequest" type="GetEquipmentNodeDescriptionsRequestType" block="#all" nillable="false"/>
+	<xsd:element name="GetEquipmentNodeDescriptionsResponse" type="GetEquipmentNodeDescriptionsResponseType" block="#all" nillable="false">
+		<xsd:key name="EquipmentNodeIdKey">
+			<xsd:selector xpath=".//NodeDescription"/>
+			<xsd:field xpath="EquipmentNodeId"/>
+		</xsd:key>
+	</xsd:element>
+	<xsd:element name="GetLatestRevisionRequest" type="GetLatestRevisionRequestType" block="#all" nillable="false"/>
+	<xsd:element name="GetLatestRevisionResponse" type="GetLatestRevisionResponseType" block="#all" nillable="false"/>
+	<xsd:element name="NotifyOnRevisionsRequest" type="NotifyOnRevisionsRequestType" block="#all" nillable="false"/>
+	<xsd:element name="NotifyOnRevisionsResponse" type="NotifyOnRevisionsResponseType" block="#all" nillable="false"/>
+	<xsd:element name="MetadataRevisedNotification" type="MetadataRevisedNotificationType" block="#all" nillable="false"/>
+</xsd:schema>

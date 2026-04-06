@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<xsd:schema xmlns="urn:semi-org:xsd.CommonComponents.V0305.ccs" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:ccs="urn:semi-org:xsd.CommonComponents.V0305.ccs" targetNamespace="urn:semi-org:xsd.CommonComponents.V0305.ccs" elementFormDefault="qualified">
+	<!--
+NOTICE: SEMI makes no warranties or representations as to the suitability of the standards set forth herein for any particular application. The determination of the suitability of the standard is solely the responsibility of the user. Users are cautioned to refer to manufacturer's instructions, product labels, product data sheets, and other relevant literature, respecting any materials or equipment mentioned herein. These standards are subject to change without notice.
+By publication of this standard, Semiconductor Equipment and Materials International (SEMI) takes no position respecting the validity of any patent rights or copyrights asserted in connection with any items mentioned in this standard. Users of this standard are expressly advised that determination of any such patent rights or copyrights, and the risk of infringement of such rights are entirely their own responsibility.
+-->
+	<!-- T Y P E   D E F I N I T I O N S -->
+	<xsd:complexType name="ErrorType" final="#all">
+		<xsd:sequence>
+			<xsd:element name="Description" type="xsd:string" block="#all"/>
+			<xsd:element name="Extension" minOccurs="0">
+				<xsd:complexType>
+					<xsd:sequence>
+						<xsd:any processContents="lax"/>
+					</xsd:sequence>
+				</xsd:complexType>
+			</xsd:element>
+		</xsd:sequence>
+		<xsd:attribute name="source" type="xsd:string" use="required"/>
+		<xsd:attribute name="code" type="xsd:int" use="required"/>
+	</xsd:complexType>
+	<xsd:element name="Error" type="ErrorType"/>
+</xsd:schema>

@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<wsdl:definitions name="ESDClient" targetNamespace="urn:semi-org:ws.E125-1.V0305.esdMetaClt-portType" xmlns="urn:semi-org:ws.E125-1.V0305.esdMetaClt-portType" xmlns:auth="urn:semi-org:xsd.E132-1.V0305.auth" xmlns:clmport="urn:semi-org:ws.E125-1.V0305.esdMetaClt-portType" xmlns:esd="urn:semi-org:xsd.E125-1.V0305.esd" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+	<!--
+
+NOTICE: SEMI makes no warranties or representations as to the suitability of the standards set forth herein for any particular application. The determination of the suitability of the standard is solely the responsibility of the user. Users are cautioned to refer to manufacturer's instructions, product labels, product data sheets, and other relevant literature, respecting any materials or equipment mentioned herein. These standards are subject to change without notice.
+
+By publication of this standard, Semiconductor Equipment and Materials International (SEMI) takes no position respecting the validity of any patent rights or copyrights asserted in connection with any items mentioned in this standard. Users of this standard are expressly advised that determination of any such patent rights or copyrights, and the risk of infringement of such rights are entirely their own responsibility.
+
+-->
+	<!-- I M P O R T S -->
+	<wsdl:types>
+		<xsd:schema>
+			<xsd:import namespace="urn:semi-org:xsd.E125-1.V0305.esd" schemaLocation="E125-1-V0305-Schema.xsd"/>
+			<xsd:import namespace="urn:semi-org:xsd.E132-1.V0305.auth" schemaLocation="E132-1-V0305-Schema.xsd"/>
+		</xsd:schema>
+	</wsdl:types>
+	<!-- M E S S A G E   D E F I N I T I O N S -->
+	<wsdl:message name="E132HashHeaderMessage">
+		<wsdl:part element="auth:E132HashHeader" name="E132HashHeader"/>
+	</wsdl:message>
+	<wsdl:message name="MetadataRevisedNotificationMessage">
+		<wsdl:part element="esd:MetadataRevisedNotification" name="MetadataRevisedNotification"/>
+	</wsdl:message>
+	<!-- P O R T   T Y P E   D E F I N I T I O N S -->
+	<wsdl:portType name="MetadataClient">
+		<wsdl:operation name="MetadataRevised">
+			<wsdl:input message="MetadataRevisedNotificationMessage" name="MetadataRevisedIn"/>
+		</wsdl:operation>
+	</wsdl:portType>
+</wsdl:definitions>

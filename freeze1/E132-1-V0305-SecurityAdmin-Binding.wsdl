@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<wsdl:definitions name="SecurityAdmin"
+    xmlns="urn:semi-org:ws.E132-1.V0305.secAdmin-binding"
+    targetNamespace="urn:semi-org:ws.E132-1.V0305.secAdmin-binding"
+    xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"
+    xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/"
+	xmlns:SAPort="urn:semi-org:ws.E132-1.V0305.secAdmin-portType">
+
+<!--
+
+This document and the information contained herein is provided on an "AS IS" basis and to the maximum extent permitted by applicable law, SEMI provides the document AS IS AND WITH ALL FAULTS, and hereby disclaims all other warranties and conditions, either express, implied or statutory, including, but not limited to, any (if any) implied warranties, duties or conditions of merchantability, of fitness for a particular purpose, of accuracy or completeness of responses, of results, of workmanlike effort, of lack of viruses, and of lack of negligence, all with regard to the document. ALSO, THERE IS NO WARRANTY OR CONDITION OF TITLE, QUIET ENJOYMENT, QUIET POSSESSION, CORRESPONDENCE TO DESCRIPTION OR NON-INFRINGEMENT OF ANY INTELLECTUAL PROPERTY RIGHTS WITH REGARD TO THE DOCUMENT.
+ 
+IN NO EVENT WILL SEMI BE LIABLE TO ANY OTHER PARTY FOR THE COST OF PROCURING SUBSTITUTE GOODS OR SERVICES, LOST PROFITS, LOSS OF USE, LOSS OF DATA, OR ANY INCIDENTAL, CONSEQUENTIAL, DIRECT, INDIRECT, OR SPECIAL DAMAGES WHETHER UNDER CONTRACT, TORT, WARRANTY, OR OTHERWISE, ARISING IN ANY WAY OUT OF THIS OR ANY OTHER AGREEMENT RELATING TO THIS DOCUMENT, WHETHER OR NOT SUCH PARTY HAD ADVANCE NOTICE OF THE POSSIBILITY OF SUCH DAMAGES.
+
+-->
+
+	<!-- I M P O R T S -->
+    <wsdl:import namespace="urn:semi-org:ws.E132-1.V0305.secAdmin-portType" location="E132-1-V0305-SecurityAdmin-PortType.wsdl"/>
+	
+	<!-- P O R T   B I N D I N G   D E F I N I T I O N S -->
+    <wsdl:binding name="SecurityAdminBinding" type="SAPort:SecurityAdmin">
+        <soap:binding style="document" transport="http://schemas.xmlsoap.org/soap/http"/>
+        <wsdl:operation name="GetDefinedPrivileges">
+            <soap:operation style="document" soapAction="urn:semi-org:ws.E132-1.V0305.secAdmin-binding:GetDefinedPrivileges"/>
+            <wsdl:input name="GetDefinedPrivilegesRequestIn">
+                <soap:header message="SAPort:E132HeaderMessage" part="E132Header" use="literal" required="true"/>
+                <soap:body use="literal"/>
+            </wsdl:input>
+            <wsdl:output name="GetDefinedPrivilegesResponseOut">
+                <soap:header message="SAPort:E132HeaderMessage" part="E132Header" use="literal" required="true"/>
+                <soap:body use="literal"/>
+            </wsdl:output>
+        </wsdl:operation>
+        <wsdl:operation name="GetACL">
+            <soap:operation style="document" soapAction="urn:semi-org:ws.E132-1.V0305.secAdmin-binding:GetACL"/>
+            <wsdl:input name="GetACLRequestIn">
+                <soap:header message="SAPort:E132HeaderMessage" part="E132Header" use="literal" required="true"/>
+                <soap:body use="literal"/>
+            </wsdl:input>
+            <wsdl:output name="GetACLResponseOut">
+                <soap:header message="SAPort:E132HeaderMessage" part="E132Header" use="literal" required="true"/>
+                <soap:body use="literal"/>
+            </wsdl:output>
+        </wsdl:operation>
+        <wsdl:operation name="AddACLEntry">
+            <soap:operation style="document" soapAction="urn:semi-org:ws.E132-1.V0305.secAdmin-binding:AddACLEntry"/>
+            <wsdl:input name="AddACLEntryRequestIn">
+                <soap:header message="SAPort:E132HeaderMessage" part="E132Header" use="literal" required="true"/>
+                <soap:body use="literal"/>
+            </wsdl:input>
+            <wsdl:output name="AddACLEntryResponseOut">
+                <soap:header message="SAPort:E132HeaderMessage" part="E132Header" use="literal" required="true"/>
+                <soap:body use="literal"/>
+            </wsdl:output>
+        </wsdl:operation>
+        <wsdl:operation name="DeleteACLEntry">
+            <soap:operation style="document" soapAction="urn:semi-org:ws.E132-1.V0305.secAdmin-binding:DeleteACLEntry"/>
+            <wsdl:input name="DeleteACLEntryRequestIn">
+                <soap:header message="SAPort:E132HeaderMessage" part="E132Header" use="literal" required="true"/>
+                <soap:body use="literal"/>
+            </wsdl:input>
+            <wsdl:output name="DeleteACLEntryResponseOut">
+                <soap:header message="SAPort:E132HeaderMessage" part="E132Header" use="literal" required="true"/>
+                <soap:body use="literal"/>
+            </wsdl:output>
+        </wsdl:operation>
+        <wsdl:operation name="GetActiveSessions">
+            <soap:operation style="document" soapAction="urn:semi-org:ws.E132-1.V0305.secAdmin-binding:GetActiveSessions"/>
+            <wsdl:input name="GetActiveSessionsRequestIn">
+                <soap:header message="SAPort:E132HeaderMessage" part="E132Header" use="literal" required="true"/>
+                <soap:body use="literal"/>
+            </wsdl:input>
+            <wsdl:output name="GetActiveSessionsResponseOut">
+                <soap:header message="SAPort:E132HeaderMessage" part="E132Header" use="literal" required="true"/>
+                <soap:body use="literal"/>
+            </wsdl:output>
+        </wsdl:operation>
+        <wsdl:operation name="SetMaxSessions">
+            <soap:operation style="document" soapAction="urn:semi-org:ws.E132-1.V0305.secAdmin-binding:SetMaxSessions"/>
+            <wsdl:input name="SetMaxSessionsRequestIn">
+                <soap:header message="SAPort:E132HeaderMessage" part="E132Header" use="literal" required="true"/>
+                <soap:body use="literal"/>
+           </wsdl:input>
+            <wsdl:output name="SetMaxSessionsResponseOut">
+                <soap:header message="SAPort:E132HeaderMessage" part="E132Header" use="literal" required="true"/>
+                <soap:body use="literal"/>
+            </wsdl:output>
+        </wsdl:operation>
+        <wsdl:operation name="GetMaxSessions">
+            <soap:operation style="document" soapAction="urn:semi-org:ws.E132-1.V0305.secAdmin-binding:GetMaxSessions"/>
+            <wsdl:input name="GetMaxSessionsRequestIn">
+                <soap:header message="SAPort:E132HeaderMessage" part="E132Header" use="literal" required="true"/>
+                <soap:body use="literal"/>
+           </wsdl:input>
+            <wsdl:output name="GetMaxSessionsResponseOut">
+                <soap:header message="SAPort:E132HeaderMessage" part="E132Header" use="literal" required="true"/>
+                <soap:body use="literal"/>
+            </wsdl:output>
+        </wsdl:operation>
+    </wsdl:binding>
+
+</wsdl:definitions>

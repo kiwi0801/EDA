@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<wsdl:definitions name="DCPConsumer" 
+	xmlns="urn:semi-org:ws.E134-1.V1105.DCPConsumer-portType" 
+	xmlns:xsd="http://www.w3.org/2001/XMLSchema" 
+	xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" 
+	xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" 
+	xmlns:dcm="urn:semi-org:xsd.E134-1.V1105.DCM"
+	xmlns:auth="urn:semi-org:xsd.E132-1.V0305.auth" 
+	targetNamespace="urn:semi-org:ws.E134-1.V1105.DCPConsumer-portType">
+<!--
+
+NOTICE: SEMI makes no warranties or representations as to the suitability of the standards set forth herein for any particular application. The determination of the suitability of the standard is solely the responsibility of the user. Users are cautioned to refer to manufacturer's instructions, product labels, product data sheets, and other relevant literature, respecting any materials or equipment mentioned herein. These standards are subject to change without notice.
+
+By publication of this standard, Semiconductor Equipment and Materials International (SEMI) takes no position respecting the validity of any patent rights or copyrights asserted in connection with any items mentioned in this standard. Users of this standard are expressly advised that determination of any such patent rights or copyrights, and the risk of infringement of such rights are entirely their own responsibility.
+
+-->
+
+	<!-- I M P O R T S -->
+	<wsdl:types>
+		<xsd:schema>
+			<xsd:import namespace="urn:semi-org:xsd.E134-1.V1105.DCM" schemaLocation="E134-1-V1105-Schema.xsd" />
+			<xsd:import namespace="urn:semi-org:xsd.E132-1.V0305.auth" schemaLocation="E132-1-V0305-Schema.xsd" /> 
+		</xsd:schema>
+	</wsdl:types>
+
+    <!-- M E S S A G E   D E F I N I T I O N S -->
+	<wsdl:message name="NewDataIn">
+		<wsdl:part name="NewData" element="dcm:NewDataNotification" />
+	</wsdl:message>
+	<wsdl:message name="PerformanceWarningIn">
+		<wsdl:part name="PerformanceWarning" element="dcm:PerformanceWarningNotification" />
+	</wsdl:message>
+	<wsdl:message name="PerformanceRestoredIn">
+		<wsdl:part name="PerformanceRestored" element="dcm:PerformanceRestoredNotification" />
+	</wsdl:message>
+	<wsdl:message name="DCPDeactivationIn">
+		<wsdl:part name="DCPDeactivation" element="dcm:DCPDeactivationNotification" />
+	</wsdl:message>
+	<wsdl:message name="DCPHibernationIn">
+		<wsdl:part name="DCPHibernation" element="dcm:DCPHibernatedNotification" />
+	</wsdl:message>
+	<wsdl:message name="E132HashHeaderMessage">
+		<wsdl:part name="E132HashHeader" element="auth:E132HashHeader"/>
+	</wsdl:message>
+
+    <!-- P O R T   T Y P E   D E F I N I T I O N S -->
+	<wsdl:portType name="DCPConsumer">
+		<wsdl:operation name="NewData">
+			<wsdl:input name="NewDataInput" message="NewDataIn" />
+		</wsdl:operation>
+		<wsdl:operation name="PerformanceWarning">
+			<wsdl:input name="PerformanceWarningInput" message="PerformanceWarningIn" />
+		</wsdl:operation>
+		<wsdl:operation name="PerformanceRestored">
+			<wsdl:input name="PerformanceRestoredInput" message="PerformanceRestoredIn" />
+		</wsdl:operation>
+		<wsdl:operation name="DCPDeactivation">
+			<wsdl:input name="DCPDeactivationInput" message="DCPDeactivationIn" />
+		</wsdl:operation>
+		<wsdl:operation name="DCPHibernation">
+			<wsdl:input name="DCPHibernationInput" message="DCPHibernationIn" />
+		</wsdl:operation>
+	</wsdl:portType>
+</wsdl:definitions>

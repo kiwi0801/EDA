@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<wsdl:definitions name="SessionClient" 
+    xmlns="urn:semi-org:ws.E132-1.V0305.sessClient-binding" 
+	targetNamespace="urn:semi-org:ws.E132-1.V0305.sessClient-binding"
+	xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" 
+	xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/"
+	xmlns:SCPort="urn:semi-org:ws.E132-1.V0305.sessClient-portType">
+	
+	<!-- Import Port and messages -->
+    <wsdl:import namespace="urn:semi-org:ws.E132-1.V0305.sessClient-portType" location="E132-1-V0305-SessionClient-PortType.wsdl"/>
+	
+	<wsdl:binding name="SessionClientBinding" type="SCPort:SessionClient">
+		<soap:binding style="document" transport="http://schemas.xmlsoap.org/soap/http"/>
+		<wsdl:operation name="SessionPing">
+			<soap:operation style="document" soapAction="urn:semi-org:ws.E132-1.V0305.sessClient-binding:SessionPing"/>
+			<wsdl:input name="SessionPingRequestIn">
+                <soap:header message="SCPort:E132HashHeaderMessage" part="E132HashHeader" use="literal" required="true"/>
+				<soap:body use="literal"/>
+			</wsdl:input>
+			<wsdl:output name="SessionPingResponseOut">
+                <soap:header message="SCPort:E132HashHeaderMessage" part="E132HashHeader" use="literal" required="true"/>
+				<soap:body use="literal"/>
+			</wsdl:output>
+		</wsdl:operation>
+		<wsdl:operation name="SessionFrozen">
+			<soap:operation style="document" soapAction="urn:semi-org:ws.E132-1.V0305.sessClient-binding:SessionFrozen"/>
+			<wsdl:input name="SessionFrozenIn">
+                <soap:header message="SCPort:E132HashHeaderMessage" part="E132HashHeader" use="literal" required="true"/>
+				<soap:body use="literal"/>
+			</wsdl:input>
+		</wsdl:operation>
+		<wsdl:operation name="SessionClosed">
+			<soap:operation style="document" soapAction="urn:semi-org:ws.E132-1.V0305.sessClient-binding:SessionClosed"/>
+			<wsdl:input name="SessionClosedIn">
+                <soap:header message="SCPort:E132HashHeaderMessage" part="E132HashHeader" use="literal" required="true"/>
+				<soap:body use="literal"/>
+			</wsdl:input>
+		</wsdl:operation>
+	</wsdl:binding>
+	
+</wsdl:definitions>

@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<wsdl:definitions name="DCPConsumer" 
+	xmlns="urn:semi-org:ws.E134-1.V1105.DCPConsumer-binding" 
+	xmlns:xsd="http://www.w3.org/2001/XMLSchema" 
+	xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" 
+	xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" 
+	xmlns:dcmb="urn:semi-org:ws.E134-1.V1105.DCPConsumer-binding"
+	xmlns:dcmp="urn:semi-org:ws.E134-1.V1105.DCPConsumer-portType" 
+	xmlns:dcm="urn:semi-org:xsd.E134-1.V1105.DCM" 
+	targetNamespace="urn:semi-org:ws.E134-1.V1105.DCPConsumer-binding">
+	
+<!--
+
+NOTICE: SEMI makes no warranties or representations as to the suitability of the standards set forth herein for any particular application. The determination of the suitability of the standard is solely the responsibility of the user. Users are cautioned to refer to manufacturer's instructions, product labels, product data sheets, and other relevant literature, respecting any materials or equipment mentioned herein. These standards are subject to change without notice.
+
+By publication of this standard, Semiconductor Equipment and Materials International (SEMI) takes no position respecting the validity of any patent rights or copyrights asserted in connection with any items mentioned in this standard. Users of this standard are expressly advised that determination of any such patent rights or copyrights, and the risk of infringement of such rights are entirely their own responsibility.
+
+-->
+
+	<!-- I M P O R T S -->
+	<wsdl:import namespace="urn:semi-org:ws.E134-1.V1105.DCPConsumer-portType" 
+		location="E134-1-V1105-Client-portType.wsdl" />
+
+	<!-- B I N D I N G   D E F I N I T I O N S -->
+	<wsdl:binding name="DCPConsumerBinding" type="dcmp:DCPConsumer">
+		<soap:binding style="document" transport="http://schemas.xmlsoap.org/soap/http" />
+		<wsdl:operation name="NewData">
+			<soap:operation style="document" soapAction="urn:semi-org:ws.E134-1.V1105.DCPConsumer-binding:NewData" />
+			<wsdl:input name="NewDataInput">
+				<soap:header message="dcmp:E132HashHeaderMessage" part="E132HashHeader" use="literal" required="true"/>
+				<soap:body use="literal" />
+			</wsdl:input>
+		</wsdl:operation>
+		<wsdl:operation name="PerformanceWarning">
+			<soap:operation style="document" soapAction="urn:semi-org:ws.E134-1.V1105.DCPConsumer-binding:PerformanceWarning" />
+			<wsdl:input name="PerformanceWarningInput">
+				<soap:header message="dcmp:E132HashHeaderMessage" part="E132HashHeader" use="literal" required="true"/>
+				<soap:body use="literal" />
+			</wsdl:input>
+		</wsdl:operation>
+		<wsdl:operation name="PerformanceRestored">
+			<soap:operation style="document" soapAction="urn:semi-org:ws.E134-1.V1105.DCPConsumer-binding:PerformanceRestored" />
+			<wsdl:input name="PerformanceRestoredInput">
+				<soap:header message="dcmp:E132HashHeaderMessage" part="E132HashHeader" use="literal" required="true"/>
+				<soap:body use="literal" />
+			</wsdl:input>
+		</wsdl:operation>
+		<wsdl:operation name="DCPDeactivation">
+			<soap:operation style="document" soapAction="urn:semi-org:ws.E134-1.V1105.DCPConsumer-binding:DCPDeactivation" />
+			<wsdl:input name="DCPDeactivationInput">
+				<soap:header message="dcmp:E132HashHeaderMessage" part="E132HashHeader" use="literal" required="true"/>
+				<soap:body use="literal" />
+			</wsdl:input>
+		</wsdl:operation>
+		<wsdl:operation name="DCPHibernation">
+			<soap:operation style="document" soapAction="urn:semi-org:ws.E134-1.V1105.DCPConsumer-binding:DCPHibernation" />
+			<wsdl:input name="DCPHibernationInput">
+				<soap:header message="dcmp:E132HashHeaderMessage" part="E132HashHeader" use="literal" required="true"/>
+				<soap:body use="literal" />
+			</wsdl:input>
+		</wsdl:operation>
+	</wsdl:binding>
+</wsdl:definitions>
